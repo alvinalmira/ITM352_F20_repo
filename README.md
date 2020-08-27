@@ -1,4 +1,6 @@
 # hello-world
 First repository
-I'm a college student that doesn't know how this semester will turn out, but I'll deal with it some how with willpower
-I like cookies, chocolate, food, and tea.
+
+Hello there!
+I like cookies, chocolate, food, and tea. I try to become a better version of me everyday.
+"The cost of procrastination is the life you could have lived." -Twitter
