@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>hello</p>
+      <script>
+        document.write(7);
+        
+        var myfirstName= "Alvin";
+        var middleName= "Punzalan";
+        var lastName= "Almira";
+        var fullName= myfirstName + " " + middleName + " " + lastName;
+        var formattedName= fullName + '<br>' + myfirstName[0] + '.' + middleName[0] + '.' + lastName[0] + '.'
+        
+        document.write(fullName);
+        document.write(formattedName);
+    </script>
+
+    <div id="ageDiv"></div>
+
+    <p id="kid"></p>
+    
+    <p id="test"></p>
+  
+</body>
+</html>
+<script>
+    var numOfKids, age;
+    numOfKids= 1; age= 20.58;
+
+    document.getElementById("ageDiv").innerHTML="20.58";
+    document.getElementById("kid").innerHTML= "i want " + numOfKids*age*stupid + " kids";
+       
+</script>
