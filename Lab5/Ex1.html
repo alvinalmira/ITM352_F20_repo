@@ -9,15 +9,24 @@
     <p>hello</p>
       <script>
         document.write(7);
-        
-        var myfirstName= "Alvin";
+    </script>
+    <br>
+     <script>
+        var firstName= "Alvin Edward";
         var middleName= "Punzalan";
         var lastName= "Almira";
-        var fullName= myfirstName + " " + middleName + " " + lastName;
-        var formattedName= fullName + '<br>' + myfirstName[0] + '.' + middleName[0] + '.' + lastName[0] + '.'
+        var fullName= firstName + " " + middleName + " " + lastName + "<br>";
+        var formattedName= fullName + '<br>' + firstName[0] + '.' + middleName[0] + '.' + lastName[0] + '.' + "<br>" + "<br>" 
         
-        document.write(fullName);
+        /* var coolName= "<b>" + firstName + "</b>" + "<br>" + "<i>" + middleName + "</i>" + "<br>" + "<>" + lastName + "</b>" */
+
+        document.write(fullName + "<br>");
         document.write(formattedName);
+        document.write(firstName.bold() + '<br>' + middleName.italics() + '<br>' + lastName.fontsize(10));
+
+       document.write( "<br>" + firstName + "'s " + "tax is " +[0.0413*300] + "!" );
+
+
     </script>
 
     <div id="ageDiv"></div>
@@ -34,5 +43,6 @@
 
     document.getElementById("ageDiv").innerHTML="20.58";
     document.getElementById("kid").innerHTML= "i want " + numOfKids*age*stupid + " kids";
-       
+    
+    number.toFixed(2);
 </script>
