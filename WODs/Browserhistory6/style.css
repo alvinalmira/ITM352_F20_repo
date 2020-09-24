@@ -1,0 +1,54 @@
+/* heading */
+h1, h2 {
+    font-family: 'Oswald', sans;
+}
+
+/* listing & navbar */
+ul {
+    list-style-type: none;
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+    
+}
+
+li {
+    display: inline;
+}
+
+#navbar a {
+    margin: 0px 50px 0px 50px;
+
+}
+
+/* body alignment;behavior */
+body {
+    font-family: 'Open Sans', sans;
+    color: yellow;
+    margin: 10px 50px 10px 50px;
+    width: 950px;
+    background-color: black;
+}
+
+img {
+    float: left;
+    margin-right: 9px;
+}
+
+.left {
+    float: left;
+    width: 300px;
+    padding: 10px 0 0 0;
+}
+
+.right {
+    float: right;
+    width: 300px;
+    padding: 10px 0 0 0;
+}
+
+.center {
+    margin-left: 300px;
+    margin-right: 300px;
+    padding: 10px 0 0 0;
+}
