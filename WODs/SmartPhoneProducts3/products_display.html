@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <script>
+
+
+        // phone 1 
+        let products1 = {
+            brand: "HTC",
+            price: 40.00,
+            image: "http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg"
+        };
+
+        // phone 2
+        let products2 = {
+
+            brand: "Apple",
+            price: 75.00,
+            image: "http://dport96.github.io/ITM352/morea/080.flow-control-II/iphone-3gs.jpg"
+        };
+
+        // phone 3
+        let products3 = {
+            brand: "Nokia",
+            price: 35.00,
+            image: "http://dport96.github.io/ITM352/morea/080.flow-control-II/Nokia.jpg"
+        }
+
+        // phone 4
+        let products4 = {
+            brand: "Samsung",
+            price: 45.00,
+            image: "http://dport96.github.io/ITM352/morea/080.flow-control-II/Samsung.jpg"
+        };
+
+        // phone 5
+        let products5 = {
+            brand: "Blackberry",
+            price: 10.00,
+            image: "http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg"
+        };
+    </script>
+
+    <link rel="stylesheet" href="./products-style.css">
+
+    <style>
+        img {
+            border: 1px solid #ddd;
+            /* Gray border */
+            border-radius: 4px;
+            /* Rounded border */
+            padding: 5px;
+            /* Some padding */
+            width: 150px;
+            /* Set a small width */
+        }
+
+        /* Add a hover effect (blue shadow) */
+
+        img:hover {
+            box-shadow: 0 0 5px 1px black;
+        }
+    </style>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartphone Products 3</title>
+</head>
+
+<body>
+
+    <h1><span class="head">Used Smart Phone Store</span></h1>
+
+
+    <div>
+        <main>
+
+
+
+            <script>
+
+                let products = [products1, products2, products3, products4, products5];
+
+                for (i = 0; i <= 5; i++) {
+
+                    document.write(`<section class="item"> 
+        <h2>${products[i].brand}</h2>
+        <p>&dollar;${products[i].price}</p>
+        <img src="${products[i].image}">
+    </section>`);
+
+                }
+
+            </script>
+
+        </main>
+    </div>
+    <footer><span class="foot">Your One Stop Phone Shop</span></footer>
+
+</body>
+
+</html>
