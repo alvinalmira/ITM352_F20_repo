@@ -1,0 +1,30 @@
+/* styling the products display */
+img {
+    width: 200px;
+    height: 200px;
+}
+div {
+    column-count: inherit;
+    column-gap: 30px;
+    column-rule-style: solid;
+    column-rule-color: wheat;
+    column-rule-width: 6px;
+    padding: 2.5em; 
+    border-style: dotted;
+    border-color:  wheat;
+    margin-top: 0px;
+    text-align: center;
+}
+#col h2 {
+    display: inline;
+    vertical-align: top;
+}
+main {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+} 
+
+p {
+    text-align: center;
+}

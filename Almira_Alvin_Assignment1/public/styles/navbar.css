@@ -1,0 +1,31 @@
+/* styling the nav bar, used help from w3schools.com*/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: black;
+    position: static;
+    top: 0;
+    width: 15%;
+    text-align: center;
+    }
+
+    li {
+    float: center;
+    }
+
+    li a {
+    display: block;
+    color: white;
+    font-size: 14pt;
+    text-align: center;
+    padding: 20px 10px;
+    text-decoration: none;
+    }
+    li a:hover:not(.products) {
+    background-color: gray;
+    }
+    .products {
+        background-color: darkslategray;
+    }

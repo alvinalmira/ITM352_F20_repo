@@ -1,0 +1,121 @@
+<script src="./products.js" type="text/javascript">
+// links array
+</script>
+<script>
+    // sourced from lab12
+    function isNonNegInt(qty, return_errors = false) 
+    { //this function checks if values are postitive, integer, whole values 
+        errors = []; // assume no errors at first
+        if (qty == '') qty = 0; //sets blank inputs to the quantitiy of 0 
+        if (Number(qty) != qty) errors.push(' <b>This is not a number!</b>'); // Check if string is a number value
+        else if (qty < 0) errors.push('<b>Negative value!</b>'); // Check if it is non-negative
+        else if (parseInt(qty) != qty) errors.push('<b>This is not a full value!</b>'); // Check that it is an integer
+        return return_errors ? errors : (errors.length == 0);
+    }
+    function checkQuantityTextbox(textbox) 
+    { // this function uses the isNonNegInt to check quantity
+        check = isNonNegInt(textbox.value, true);
+        if (check.length==0) check = ['You are getting:'];
+        if(textbox.value.trim() == '') check = ['Quantity'];
+        document.getElementById(textbox.name + '_label').innerHTML = check.join(", ");
+    }
+    // executes webpage
+    window.onload = function () 
+    {
+        let params = (new URL(document.location)).searchParams; // this is to get the string that has the form data
+        // if statement to figure out if we're good to go with no bad quantities
+        if (params.has('submitPurchase'))
+        {
+            gotErrors = false; // just gonna set this to false from the start
+            total_qty = 0; 
+            // making loop to that lists the products
+            for (i=0; i < products.length; i++)
+            {
+                if(params.has(`quantity${i}`))
+                {
+                    quantity = params.get(`quantity${i}`);
+                    product_form[`quantity${i}`].value = quantity;
+                    total_qty += quantity;
+                    if (!isNonNegInt(quantity))
+                    {
+                        gotErrors = true;
+
+                        // checks where an error is
+                        checkQuantityTextbox(product_form[`quantity${i}`])
+                    }
+                }
+            }
+            if (gotErrors)
+            {
+                alert("Enter a valid quantity"); // for letting you know that the quantity value is invalid
+            }
+            else if (total_qty == 0)
+            {
+                alert("Your shopping cart is empty!"); // tells you have nothing in your cart
+            }
+            else
+            {
+                window.location = `./invoice.html${document.location.search}`; // the page will redirect you to the invoice
+                window.stop
+            }
+        }
+    }
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your EDC</title>
+    <!-- linking the stylesheets -->
+    <link rel="stylesheet" href="./styles/navbar.css">
+    <link rel="stylesheet" href="./styles/products-style.css">
+
+    <!-- styling the page -->
+    <style>
+        body 
+        {
+            text-align: center;
+            font-family:'Oswald', 'Sans';
+        }
+    </style>
+</head>
+<body>
+    <!-- making a list -->
+    <ul> 
+        <li style="float:center"><a href="./index.html">Your EDC</a></li>
+        <li><a href="./invoice.html">Cart</a></li>
+        <li><a class="products" href="./products_display.html">Products</a></li>
+    </ul>
+
+    <!-- starting a form -->
+    <form name = "product_main_display" action="/process_purchase" method="POST">
+        <div>
+            <main>
+                <!-- setting up a script to write each products name onto the page-->
+                <script>
+                    for (i = 0; i < products.length; i++) {
+                        document.write(`
+                                <section class="item">
+                                    <h2>${products[i].name}</h2>
+                                    <br><img src="${products[i].image}">
+                                    <p>$${products[i].price}</p>
+                                    <p><em>${products[i].description}</em></p>
+                                    <label id="quantity${i}_label">"Quantity"</label>
+                                    <input type="text" placeholder="0" name="quantity${i}" 
+                                    onkeyup="checkQuantityTextbox(this);"></input>
+                
+                                </section>`
+                            );
+                    }
+                </script>
+            </main>
+        </div>
+        
+        <!-- inputting a footer-->
+        <footer>
+            <input type ="submit" value="Confirm" name="submitPurchase">
+        </footer>
+    </form>
+</body>
+</html>
