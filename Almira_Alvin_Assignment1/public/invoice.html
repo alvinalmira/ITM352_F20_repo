@@ -1,4 +1,4 @@
-<!-- the invoice sheet-->>
+<!-- the invoice sheet-->
 <script src="./products.js" type="text/javascript"> //uses a get request to get the products array
 </script>
 
@@ -18,11 +18,7 @@
             }
         }
 
-    } else {
-        window.location.href = './products_display.html'; 
-        
-        // sends user back to the products to enter quantities for the products.
-    }
+    } 
 </script>
 
 <!DOCTYPE html>
@@ -32,8 +28,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
-    <link rel="stylesheet" href="./stylesheets/navbar.css">
-    <link rel="stylesheet" href="./stylesheets/checkout.css">
+    <link rel="stylesheet" href="./styles/navbar.css">
+    <link rel="stylesheet" href="./styles/checkout.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
 
     <style>
@@ -98,7 +94,7 @@
                             // Compute grand total
                             var total = subtotal + tax + shipping;
 
-              // bottom part of table
+              // making second half of table
                         </script>
                         <tr>
                             <td colspan="4" width="100%">&nbsp;</td>
@@ -138,7 +134,7 @@
                 </table>
             </div>
         </div>
-                    <input type="submit" value="Finalize Purchase" class="btn">
+                    <input type="submit" value="Purchase" class="btn">
                 </form>
             </div>
         </div>
