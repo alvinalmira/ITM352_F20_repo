@@ -8,7 +8,7 @@ ul {
     position: static;
     top: 0;
     width: 15%;
-    text-align: center;
+    text-align: right;
     }
 
     li {
@@ -21,8 +21,9 @@ ul {
     font-size: 14pt;
     text-align: center;
     padding: 20px 10px;
-    text-decoration: none;
+    text-decoration: underline;
     }
+    
     li a:hover:not(.products) {
     background-color: gray;
     }

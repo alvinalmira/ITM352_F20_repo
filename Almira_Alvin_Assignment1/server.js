@@ -10,7 +10,7 @@ var myParser = require("body-parser"); //load & cache body parser module
 
 app.all('*', function (request, response, next) { //request methods
     console.log(request.method + ' to ' + request.path); //write in the console the request method and its path
-    next(); //move on
+    next(); // goes onto next process
 });
 
 app.use(myParser.urlencoded({ extended: true })); //gets data in the body
@@ -20,17 +20,17 @@ app.post("/process_purchase", function (request, response) {
 
     //check if quantities are nonnegative integers 
     if (typeof POST['submitPurchase'] != 'undefined') {
-        var hasvalidquantities=true; // creating a varibale if it's true
-        var hasquantities=false
+        var validQty=true; // creating a variabale if it's true
+        var anyQuantity=false
         for (i = 0; i < products.length; i++) {
             
                         qty=POST[`quantity${i}`];
-                        hasquantities=hasquantities || qty>0; // If it has a value bigger than 0, passes
-                        hasvalidquantities=hasvalidquantities && isNonNegInt(qty);    // for both a quantity over 0 and is valid    
+                        anyQuantity=anyQuantity || qty>0; // If it has a value bigger than 0, passes
+                        validQty=validQty && isNonNegInt(qty);    // for both a quantity over 0 and is valid    
         } 
         // if all quantities are valid, generate the invoice  
         const stringified = queryString.stringify(POST);
-        if (hasvalidquantities && hasquantities) {
+        if (validQty && anyQuantity) {
             response.redirect("./invoice.html?"+stringified); 
             // using the invoice.html and all the data that is input
         }  

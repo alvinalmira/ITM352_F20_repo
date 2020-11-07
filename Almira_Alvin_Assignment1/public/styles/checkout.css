@@ -14,19 +14,7 @@
 
   }
   
-  .col-50 {
-    -ms-flex: 50%; 
-    flex: 50%;
- 
-  }
-  
-  .col-75 {
-    -ms-flex: 75%;
-    flex: 75%;
-  }
-  .col-25,
-  .col-50,
-  .col-75 {
+  .col-25 {
     padding: 0 16px;
     float: left;
   }
