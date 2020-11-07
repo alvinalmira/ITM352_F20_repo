@@ -34,7 +34,7 @@
 
     <style>
         body {
-            font-family: 'Oswald', 'Sans';
+            font-family: 'Sans';
         }
     </style>
 </head>
@@ -44,7 +44,7 @@
     <ul>
         <li style="float:center"><a href="./index.html">Your EDC</a></li>
         <li><a class="active" href="./invoice.html">Cart</a></li>
-        <li><a href="./products_display.html">Products</a></li>
+        <li><a class='products' href="./products_display.html">Products</a></li>
     </ul>
     <br>
     <div class="row">
@@ -81,7 +81,10 @@
                             var tax = tax_rate * subtotal;
 
                             // Compute shipping
-                            if (subtotal <= 50) {
+                            if (subtotal == 0){
+                                shipping = 0;
+                            }
+                            else if (subtotal <= 50) {
                                 shipping = 2;
                             }
                             else if (subtotal <= 100) {
@@ -94,7 +97,7 @@
                             // Compute grand total
                             var total = subtotal + tax + shipping;
 
-              // making second half of table
+              // makes subtotal, shipping, tax, and total
                         </script>
                         <tr>
                             <td colspan="4" width="100%">&nbsp;</td>
@@ -106,8 +109,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3" width="67%"><span>Tax at
-                                    <script>document.write(100 * tax_rate);</script>%</span></td>
+                            <td colspan="3" width="67%"><span>Tax (
+                                    <script>document.write(100 * tax_rate);</script>% )</span></td>
                             <td width="54%">$
                                 <script>document.write(tax.toFixed(2));</script>
                             </td>

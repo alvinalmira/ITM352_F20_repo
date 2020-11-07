@@ -28,3 +28,9 @@ main {
 p {
     text-align: center;
 }
+
+div.confirmBtn{
+    padding: 10px;
+    background-color: grey;
+    margin: 10px 10px;
+}

@@ -15,8 +15,8 @@
     function checkQuantityTextbox(textbox) 
     { // this function uses the isNonNegInt to check quantity
         check = isNonNegInt(textbox.value, true);
-        if (check.length==0) check = ['You are getting:'];
-        if(textbox.value.trim() == '') check = ['Quantity'];
+        if (check.length==0) check = ['Getting: '];
+        if(textbox.value.trim() == '') check = ['Quantity:'];
         document.getElementById(textbox.name + '_label').innerHTML = check.join(", ");
     }
     // executes webpage
@@ -89,7 +89,7 @@
     </ul>
 
     <!-- starting a form -->
-    <form name = "product_main_display" action="/process_purchase" method="POST">
+    <form name = "product_display" action="/process_purchase" method="POST">
         <div>
             <main>
                 <!-- setting up a script to write each products name onto the page-->
@@ -101,7 +101,7 @@
                                     <br><img src="${products[i].image}">
                                     <p>$${products[i].price}</p>
                                     <p><em>${products[i].description}</em></p>
-                                    <label id="quantity${i}_label">"Quantity"</label>
+                                    <label id="quantity${i}_label">Quantity: </label>
                                     <input type="text" placeholder="0" name="quantity${i}" 
                                     onkeyup="checkQuantityTextbox(this);"></input>
                 
@@ -114,7 +114,7 @@
         
         <!-- inputting a footer-->
         <footer>
-            <input type ="submit" value="Confirm" name="submitPurchase">
+            <div class='confirmBtn'><input class='confirm' type ="submit" value="Confirm" name="submitPurchase"></div>
         </footer>
     </form>
 </body>

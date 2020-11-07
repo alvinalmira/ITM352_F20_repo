@@ -1,4 +1,4 @@
-/* styling the nav bar, used help from w3schools.com*/
+/* styling the navbar, props to w3schools */
 .row {
     display: -ms-flexbox; 
     display: flex;
@@ -37,9 +37,8 @@
     border: 1px solid grey;
     border-radius: 3px;
   }
-  /* styling the input text in billing information */
-  input[type=text] {
-    width: 100%;
-    margin-bottom: 20px;
-    padding: 12px;
-  }
+
+  .products {
+    background-color: whitesmoke;
+    color: black;
+}

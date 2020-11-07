@@ -41,12 +41,12 @@ app.post("/process_purchase", function (request, response) {
 });
 
 //repeats the isNonNegInt function from the products_display.html
-function isNonNegInt(q, returnErrors = false) {
+function isNonNegInt(qty, returnErrors = false) {
     errors = []; // assume that qty data is valid 
-    if (q == "") { q = 0; }
-    if (Number(q) != q) errors.push('Not a number!'); //check if the string is a number
-    if (q < 0) errors.push('Negative value!'); //check if value is a positive
-    if (parseInt(q) != q) errors.push('Not an integer!'); //check if value is an integer
+    if (qty == "") { qty = 0; }
+    if (Number(qty) != qty) errors.push('Not a number!'); //check if the string is a number
+    if (qty < 0) errors.push('Negative value!'); //check if value is a positive
+    if (parseInt(qty) != qty) errors.push('Not an integer!'); //check if value is an integer
     return returnErrors ? errors : (errors.length == 0);
 }
 
