@@ -4,7 +4,7 @@
     display: flex;
     -ms-flex-wrap: wrap; 
     flex-wrap: wrap;
-    margin: 0 -16px;
+    margin: 0 20px;
     width: 75%;
 }
   
@@ -21,9 +21,8 @@
   
   .container {
     background-color: whitesmoke;
-    padding: 5px 20px 15px 20px;
-    border: 1px solid grey;
-    border-radius: 3px;
+    padding: 10px 20px 10px 20px;
+
   }
 
   .products {
