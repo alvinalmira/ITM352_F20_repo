@@ -1,4 +1,4 @@
-// from assignment 1 screencast and lab 13
+// Alvin Alvin; finished and uploaded Nov5, fixed to make it work on server Nov6 ||  from assignment 1 screencast and lab 13
 
 var data = require('./public/products.js'); // load products.js file and set to variable 'data'
 var products_array = data.products; // 'products_array' gets assigned to the products.js file

@@ -1,3 +1,4 @@
+// Alvin Alvin; finished and uploaded Nov5, fixed to make it work on server Nov6
 products = [
 
     {
