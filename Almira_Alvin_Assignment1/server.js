@@ -28,27 +28,27 @@ app.post("/process_purchase", function (request, response) {
                         anyQuantity=anyQuantity || qty>0; // If it has a value bigger than 0, passes
                         validQty=validQty && isNonNegInt(qty);    // for both a quantity over 0 and is valid    
         } 
-        // if all quantities are valid, generate the invoice  
-        const stringified = queryString.stringify(POST);
+        // if all quantities are valid, converts the data into strings
+        let intoString = queryString.stringify(POST);
         if (validQty && anyQuantity) {
-            response.redirect("./invoice.html?"+stringified); 
+            response.redirect("./invoice.html?"+intoString); 
             // using the invoice.html and all the data that is input
         }  
         else { 
-            response.redirect("./products_display.html?" + stringified) 
+            response.redirect("./products_display.html?" + intoString) 
         }
     }
 });
 
-//repeats the isNonNegInt function from the products_display.html
-function isNonNegInt(qty, returnErrors = false) {
-    errors = []; // assume that qty data is valid 
-    if (qty == "") { qty = 0; }
-    if (Number(qty) != qty) errors.push('Not a number!'); //check if the string is a number
-    if (qty < 0) errors.push('Negative value!'); //check if value is a positive
-    if (parseInt(qty) != qty) errors.push('Not an integer!'); //check if value is an integer
-    return returnErrors ? errors : (errors.length == 0);
+//from lab12 || repeats the isNonNegInt function from the products_display.html 
+function isNonNegInt(qty, return_errors = false) { //this function checks if values are postitive, integer, whole values 
+    errors = []; // assume no errors at first
+    if (qty == '') qty = 0; //sets input quatity as 0 
+    if (Number(qty) != qty) errors.push(' <b>This is not a number!</b>'); // Check if string is a number value
+    else if (qty < 0) errors.push('<b>Negative value!</b>'); // Check if it is non-negative
+    else if (parseInt(qty) != qty) errors.push('<b>This is not a full value!</b>'); // Check that it is an integer
+    return return_errors ? errors : (errors.length == 0);
 }
 
-app.use(express.static('./public')); // root in the 'public' directory so that express will serve up files from here
+app.use(express.static('./public')); // root in the 'public' directory so that express will load files from the public directory as a static page in the event the functions above don't work
 app.listen(8080, () => console.log(`listening on port 8080`)); //run the server on port 8080 and show it in the console
