@@ -1,0 +1,37 @@
+/* alvin almira, finished on Nov5.;; styling the navbar, props to w3schools */
+.row {
+    display: -ms-flexbox; 
+    display: flex;
+    -ms-flex-wrap: wrap; 
+    flex-wrap: wrap;
+    margin: 0 20px;
+    width: 75%;
+}
+  
+  .col-25 {
+    -ms-flex: 25%; 
+    flex: 25%;
+
+  }
+  
+  .col-25 {
+    padding: 0 16px;
+    float: left;
+  }
+  
+  .container {
+    background-color: whitesmoke;
+    padding: 10px 20px 10px 20px;
+
+  }
+
+  .products {
+    background-color: whitesmoke;
+    color: black;
+}
+
+.purchase-btn{
+  margin-top: 10px;
+  margin-left: 20px;
+  
+}

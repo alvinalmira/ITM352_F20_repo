@@ -1,0 +1,83 @@
+<!-- Alvin Alvin; finished and uploaded Nov5, fixed to make it work on Nov6 -->
+<script src="./products.js" type="text/javascript">
+// links array
+</script>
+<script>
+
+    // sourced from lab12
+    function isNonNegInt(qty, return_errors = false) { //this function checks if values are postitive, integer, whole values 
+        errors = []; // assume no errors at first
+        if (qty == '') qty = 0; //sets input quatity as 0 
+        if (Number(qty) != qty) errors.push(' <b>This is not a number!</b>'); // Check if string is a number value
+        else if (qty < 0) errors.push('<b>Negative value!</b>'); // Check if it is non-negative
+        else if (parseInt(qty) != qty) errors.push('<b>This is not a full value!</b>'); // Check that it is an integer
+        return return_errors ? errors : (errors.length == 0);
+    }
+
+    function checkQuantityTextbox(textbox) 
+    { // this function uses the isNonNegInt to check quantity
+        check = isNonNegInt(textbox.value, true);
+        if (check.length==0) check = ['Getting: '];
+        if(textbox.value.trim() == '') check = ['Quantity:'];
+        document.getElementById(textbox.name + '_label').innerHTML = check.join(", ");
+    }
+    
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDC starter pack</title>
+    <!-- linking the stylesheets -->
+    <link rel="stylesheet" href="./styles/navbar.css">
+    <link rel="stylesheet" href="./styles/products-style.css">
+
+    <!-- styling the page -->
+    <style>
+        body 
+        {
+            text-align: center;
+            font-family:'Oswald', 'Sans';
+        }
+    </style>
+</head>
+<body>
+    <!-- making a list -->
+    <ul> 
+        <li style="float:center"><a href="./index.html">Your EDC</a></li>
+        <li><a href="./forms/login.html">Cart</a></li>
+        <li><a class="products" href="./products_display.html">Products</a></li>
+    </ul>
+
+    <!-- starting a form -->
+    <form name = "product_display" action="/process_purchase" method="POST">
+        <div>
+            <main>
+                <!-- setting up a script to write each products name onto the page-->
+                <script>
+                    for (i = 0; i < products.length; i++) {
+                        document.write(`
+                                <section class="item">
+                                    <h2>${products[i].name}</h2>
+                                    <br><img src="${products[i].image}">
+                                    <p>$${products[i].price}</p>
+                                    <p><em>${products[i].description}</em></p>
+                                    <label id="quantity${i}_label">Quantity: </label>
+                                    <input type="text" placeholder="0" name="quantity${i}" 
+                                    onkeyup="checkQuantityTextbox(this);"></input>
+                
+                                </section>`
+                            );
+                    }
+                </script>
+            </main>
+        </div>
+        
+        <!-- inputting a footer-->
+        <footer>
+            <div class='confirmBtn'><input class='confirm' type ="submit" value="Confirm" name="submitPurchase"></div>
+        </footer>
+    </form>
+</body>
+</html>

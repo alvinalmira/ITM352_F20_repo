@@ -1,0 +1,98 @@
+/*declaring the font*/
+* {
+    font-family: 'Lato', sans-serif;
+}
+
+/*body color*/
+body{
+    background-color: whitesmoke;
+}
+
+/*styling for login box, color, title, alignment and logo*/
+.registration-div{
+    margin:100px auto;
+    width: 350px;
+    background-color: rgb(29, 29, 29);
+    padding: 60px;
+}
+
+.logo{
+    background-color: white;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.logo img {
+    width: 100px;
+}
+
+.title, .sub-title {
+    text-align: center;
+    color: whitesmoke;
+}
+
+.title {
+    font-weight: bolder;
+    font-size: 36px;
+}
+
+.sub-title {
+    margin-top:5px;
+    margin-bottom: -3px;
+    font-size: 15px;
+}
+
+/* input styling */
+.registration {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.registration input {
+    font-size: 15px;
+    padding: 15px 20px 10px 20px;
+    border: none;
+    outline: none;
+    background: none;
+}
+
+.name, .username, .email, .password, .repeat_password{
+    display: block;
+    border-radius: 30px;
+    border: 1px solid white;
+    padding: 12px;
+    margin: 10px 0;
+    background-color: white;
+}
+
+
+.registration svg {
+    height: 25px;
+    margin-bottom: -5px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+button.register-btn{
+    width: 100%;
+    padding: 12px 10px;
+    border: none;
+    font-size: 18px;
+    border-radius: 30px;
+    background-color: white;
+    color: black;
+    margin-bottom: 5px;
+}
+
+.login{
+    margin-top: 5px;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: wheat;
+}
