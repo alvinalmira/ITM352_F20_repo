@@ -35,7 +35,7 @@ app.use(myParser.urlencoded({ extended: true })); //gets data in the body
 // Processes the products and the quanitites wanted and puts it onto the invoice
 app.post("/process_purchase", function (request, response) {
     let POST = request.body; // data packaged in body
-    //check if quantities are nonnegative integers 
+    //check if quantities are nonnegative integers
     if (typeof POST['submitPurchase'] != 'undefined') {
         var validQty = true; // creating a variabale if it's true
         var anyQuantity = false;
@@ -48,7 +48,7 @@ app.post("/process_purchase", function (request, response) {
         // if all quantities are valid, converts the data into strings
         let intoString = queryString.stringify(POST);
         if (validQty && anyQuantity) {
-            response.redirect("./invoice.html?" + intoString);
+            response.redirect("./forms/login.html?" + intoString); // changed the ./path from invoice.html ******
             // using the invoice.html and all the data that is input
         }
         else {
@@ -62,11 +62,23 @@ app.post("/process_purchase", function (request, response) {
 
 // from lab 14 :: to process the registration form
 app.post("/process_register", function (request, response) {
+    //console.log(user_reg_data[0]);
     // process a simple register form
     // response.send(request.body);
-    // if all daata is valid, write out the user_data_info and send to invoice
+    // if all data is valid, write out the user_data_info and send to invoice
 
-    // add example new user reg info
+    // ---- if request.body.username matches user_reg_data, redirect back to page//
+    if (user_reg_data[request.body['username'].toLowerCase()]) {
+        response.redirect(`./forms/registration.html?username=taken`);
+        return
+      }
+    //
+    
+    /*
+            */
+    //----
+
+    // add new user reg info
     username = request.body.username.toLowerCase();
     user_reg_data[username] = {};
     user_reg_data[username].name = request.body.name;
@@ -81,7 +93,7 @@ app.post("/process_register", function (request, response) {
         fs.writeFileSync(user_data_info, reg_info_str);
 
         response.redirect("./invoice.html?");
-    } 
+    }
 
 
 
@@ -93,13 +105,14 @@ app.post("/process_register", function (request, response) {
 // from lab14 :: processes the Login form
 app.post("/process_login", function (request, response) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
-    console.log(request.body.password);
+    // console.log(request.body.password); //
     // checks if the user exists; if they exist, get the password
     if (typeof user_reg_data[request.body['username'].toLowerCase()] != 'undefined') {
         userdata = user_reg_data[request.body['username'].toLowerCase()];
-        console.log(userdata)
+         // console.log(userdata)
         if (request.body['password'] == userdata.password) {
-            response.redirect("./invoice.html?");
+            console.log(queryString.stringify(request.query));
+            response.redirect("./invoice.html?" + queryString.stringify(request.query));
         } else {
             response.redirect(`./forms/login.html?password=incorrect`);
         }
