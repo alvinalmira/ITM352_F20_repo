@@ -1,4 +1,5 @@
-// Alvin Alvin; finished and uploaded Nov5, fixed to make it work on server Nov6 ||  from assignment 1 screencast and lab 13
+// Alvin Alvin; uploaded  on Github on Nov18, fixed on Nov22-24 ||  from assignment 1 screencast and lab 13
+// Recognitions: Daniel Port for the screencasts. Rick Kazman and his help with lab14. inspiration from other students's code because my original idea of simple validations was a complete flop (students such as Rianne, Daphne, Alyssa, Jojo, Meghan, Philip, Rose, Chavez)
 
 var data = require('./public/products.js'); // load products.js file and set to variable 'data'
 var products_array = data.products; // 'products_array' gets assigned to the products.js file
@@ -32,7 +33,7 @@ app.all('*', function (request, response, next) { //request methods
 app.use(myParser.urlencoded({ extended: true })); //gets data in the body
 
 
-// Processes the products and the quanitites wanted and puts it onto the invoice
+// Processes the products and the quanitites wanted and puts it into the invoice
 app.post("/process_purchase", function (request, response) {
     let POST = request.body; // data packaged in body
     //check if quantities are nonnegative integers
@@ -52,7 +53,7 @@ app.post("/process_purchase", function (request, response) {
             // using the invoice.html and all the data that is input
         }
         else {
-            response.redirect("./products_display.html?" + intoString)
+            response.redirect("./products_display.html?" + intoString + request.body.username)
         }
     }
 });
@@ -66,35 +67,70 @@ app.post("/process_register", function (request, response) {
     // process a simple register form
     // response.send(request.body);
     // if all data is valid, write out the user_data_info and send to invoice
-
-    // ---- if request.body.username matches user_reg_data, redirect back to page//
-    if (user_reg_data[request.body['username'].toLowerCase()]) {
-        response.redirect(`./forms/registration.html?username=taken`);
-        return
-      }
-    //
     
-    /*
-            */
-    //----
+    //regexp variables :: i tried to use the variables instead of the regExp but it didn't work for some reason
+   /* var usernameCheck = /[a-zA-Z0-9_.]+/;
+    var nameCheck = /[^a-zA-Z ]+$/;
+    var emailCheck = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$\);
+    */
 
-    // add new user reg info
-    username = request.body.username.toLowerCase();
-    user_reg_data[username] = {};
-    user_reg_data[username].name = request.body.name;
-    user_reg_data[username].password = request.body.password;
-    user_reg_data[username].email = request.body.email.toLowerCase();
-
-
-    if (request.body.password == request.body.repeat_password) {
-
-        // write updated object to user_data_info 
-        reg_info_str = JSON.stringify(user_reg_data);
-        fs.writeFileSync(user_data_info, reg_info_str);
-
-        response.redirect("./invoice.html?");
+    var error = [];
+    //requires that the username only be letters and numbers 
+    // ––– if request.body.username matches user_reg_data, redirect back to page –––//
+    if (user_reg_data[request.body['username'].toLowerCase()]) {
+        response.redirect(`./forms/username_taken.html?quantities=lost?goback?username=taken`);
+        return;
+    }
+    //username validation :: modified from stackoverflow :: test in https://regexr.com/
+    if (/\w[^a-zA-Z0-9_.]+$/.test(request.body.username.toLowerCase())) {
+        error.push('Only letters, numbers, periods and underscores.')
+    }
+    // name validation :: modified from stackoverflow :: test in https://regexr.com/
+    if (/[^a-zA-Z ]+$/.test(request.body.name)) { //only allows letters and spaces
+        error.push('Only letters are allowed.')
+    }
+    //email validation :: modified from stackoverflow :: test in https://regexr.com/
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$\)/i.test(request.body.email)) {
+        error.push('Email contains invalid characters.')
+    }
+    // verifys the passwords match
+    if (request.body.password != request.body.repeat_password) {
+        error.push('Passwords do not match. Re-enter passwords and try again.')
     }
 
+    if (error.length == 0) {
+
+        // adds user data to the JSON
+        username = request.body.username.toLowerCase();
+        user_reg_data[username] = {};
+        user_reg_data[username].name = request.body.name; // name
+        user_reg_data[username].password = request.body.password; // password
+        user_reg_data[username].email = request.body.email.toLowerCase(); // email in toLowerCase()
+
+        // write updated object to user_data_info 
+        user_info_str = JSON.stringify(user_reg_data);
+        fs.writeFileSync(user_data_info, user_info_str);
+
+        response.redirect("./invoice.html?" + queryString.stringify(request.query));
+    }
+
+    if (error.length > 0) {
+        // redirects to an error notice page w/ hints
+        console.log(error)
+       response.redirect('./forms/error.html?quantities=lost?goback?tryagain'); 
+
+    }
+
+    //        
+    /* 
+        if (request.body.password == request.body.repeat_password) {
+            // write updated object to user_data_info 
+            user_info_str = JSON.stringify(user_reg_data);
+            fs.writeFileSync(user_data_info, user_info_str);
+    
+            response.redirect("./invoice.html?");
+        }
+    */
 
 
 });
@@ -107,17 +143,21 @@ app.post("/process_login", function (request, response) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     // console.log(request.body.password); //
     // checks if the user exists; if they exist, get the password
+
+
     if (typeof user_reg_data[request.body['username'].toLowerCase()] != 'undefined') {
+        // console.log(userdata)
         userdata = user_reg_data[request.body['username'].toLowerCase()];
-         // console.log(userdata)
         if (request.body['password'] == userdata.password) {
-            console.log(queryString.stringify(request.query));
+            userdata_Uname = user_reg_data[request.body['username'].toLowerCase()];
+            request.query.username = userdata_Uname;
+
             response.redirect("./invoice.html?" + queryString.stringify(request.query));
         } else {
-            response.redirect(`./forms/login.html?password=incorrect`);
+            response.redirect(`./forms/invalid_login.html?password=incorrect`);
         }
     } else {
-        response.send(` ${request.body['username']} does not exist. Press the back button.`);
+        response.redirect(` ${request.body['username']} does not exist. Press the back button.`);
     }
 });
 

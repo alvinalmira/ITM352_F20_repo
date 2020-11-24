@@ -1,4 +1,4 @@
-// Alvin Alvin; finished and uploaded Nov5, fixed to make it work on server Nov6
+// Alvin Alvin; finished and uploaded Nov18, fixed on Nov 22
 products = [
 
     {

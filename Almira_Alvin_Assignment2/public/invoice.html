@@ -1,9 +1,11 @@
-<!--Alvin Alvin; finished and uploaded Nov5, fixed to make it work on Nov6 the invoice sheet-->
+<!-- Alvin Almira :: registration page and CSS based off https://www.youtube.com/watch?v=3qmL-ebPYzw -->
+<!-- Alvin Alvin; uploaded  on Github on Nov18, fixed on Nov22-24 -->
 <script src="./products.js" type="text/javascript"> //uses a get request to get the products array
 </script>
+<script src="./user_data.json" type="json"></script>
 
 <script>
-    // from invoices
+    // from invoices and assignment1
     let params = (new URL(document.location)).searchParams; //looks at submitPurchase, and looks for quantities
     var quantities = [];
 
@@ -18,8 +20,13 @@
             }
         }
 
-    } 
+    }
+    if (params.has('username')) {
+        var name = params.get('name');
+        var username = params.get('username');
+    }
 </script>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -143,11 +150,15 @@
 
             <script>
                 function purchaseAlert() {
-                    alert(`Thank you for purchasing your EDC loadout. Your total is ${total.toFixed(2)}. We will send you a confirmation email of your order. Take a screenshot inorder prevent any discrepancies on our end.`);
+
+                    
+                    alert(`${params.has('username')}
+                    Thank you for purchasing your EDC loadout. Your total is ${total.toFixed(2)}. We will send you a confirmation email of your order. In the email, we will have a form that has field to put your mailing address and confirmation code. Take a screenshot of this inorder prevent any discrepancies on our end.`);
                 }
             </script>
 
-            <input type="submit" value="Purchase" name="completePurchase" class="purchase-btn" onclick="purchaseAlert()">
+            <input type="submit" value="Purchase" name="completePurchase" class="purchase-btn"
+                onclick="purchaseAlert()">
 
         </form>
     </div>

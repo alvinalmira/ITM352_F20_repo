@@ -1,4 +1,4 @@
-<!-- Alvin Alvin; finished and uploaded Nov5, fixed to make it work on Nov6 -->
+<!-- Alvin Alvin; uploaded  on Github on Nov18, fixed on Nov22 -->
 <script src="./products.js" type="text/javascript">
 // links array
 </script>
@@ -20,6 +20,37 @@
         if (check.length==0) check = ['Getting: '];
         if(textbox.value.trim() == '') check = ['Quantity:'];
         document.getElementById(textbox.name + '_label').innerHTML = check.join(", ");
+    }
+
+    window.onload = function () {
+        let params = (new URL(document.location)).searchParams; // get the query string bc of the form data
+        // form is submitted & checks for valid quantities
+        if (params.has('submitPurchase')) {
+            Errors = false; // assume quantities are valid
+            total_quantity = 0; // checks if there's a quantity | making equal to zero for the check
+            //For every product in the array display its image and name and list price
+            for (i = 0; i < products.length; i++) {
+                if (params.has(`quantity${i}`)) {
+                    anyQuantity = params.get(`quantity${i}`);
+                    // make textboxes sticky if there is user error
+                    product_main_display[`quantity${i}`].value = anyQuantity;
+                    total_quantity += anyQuantity;
+                    if (!isNonNegInt(anyQuantity)) {
+                        Errors = true; // invalid quantity
+                        checkQuantityTextbox(product_main_display[`quantity${i}`]); // indicates the error
+                    }
+                }
+            }
+            // Now respond to errors or redirect to invoice if all is ok
+            if (Errors) {
+                alert("Please enter only valid quantities!");
+            } else if (total_quantity == 0) { // no quantity selections
+                alert("Please select some quantities!");
+            } else { // all good to go!
+                window.location = `./invoice.html${document.location.search}`; //Redirects itself to invoice
+                window.stop;
+            }
+        }
     }
     
 </script>
