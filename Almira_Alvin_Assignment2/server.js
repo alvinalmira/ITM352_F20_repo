@@ -163,23 +163,6 @@ app.post("/process_login", function (request, response) {
 
 
 
-/* this was suppose to process the form and POST a thank you
-function process_invoice_form(POST, response) {
-    if (typeof POST['completePurchase'] != 'undefined') {
-        var contents = fs.readFileSync('./views/display_invoice.view', 'utf8');
-        receipt = '';
-        for (i in products) {
-            let total = total.toFixed(2);
-            if (isNonNegIntStr(q)) {
-                receipt += eval('`' + contents + '`'); // render template string
-            } 
-        }
-        response.send(receipt);
-        response.end();
-    }
-}
-*/
-
 
 //from lab12 || repeats the isNonNegInt function from the products_display.html 
 function isNonNegInt(qty, return_errors = false) { //this function checks if values are postitive, integer, whole values 
