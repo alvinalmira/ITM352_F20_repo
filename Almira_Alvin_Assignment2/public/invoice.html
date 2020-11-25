@@ -6,11 +6,10 @@
 
 <script>
     // from invoices and assignment1
-    let params = (new URL(document.location)).searchParams; //looks at submitPurchase, and looks for quantities
+    let params = (new URL(document.location)).searchParams; //looks at submitPurchase & querystring, and looks for quantities
     var quantities = [];
 
     // processing the invoice; makes a form from the data
-
     // loop that get info
     if (params.has('submitPurchase')) {
         for (i = 0; i < products.length; i++) {
@@ -21,9 +20,18 @@
         }
 
     }
+
     if (params.has('username')) {
         var name = params.get('name');
         var username = params.get('username');
+    }
+
+    function purchaseAlert() {
+
+
+        alert(`Thank you for purchasing your EDC loadout. Your total is ${total.toFixed(2)}. We will send you a confirmation email of your order. In the email, we will have a form that has field to put your mailing address and confirmation code. Take a screenshot of this inorder prevent any discrepancies on our end.`);
+
+
     }
 </script>
 
@@ -62,6 +70,11 @@
                     <!--invoice table-->
                     <table border="3">
                         <tbody>
+                            <p>
+                                <script>
+                                    document.write(`${params.get('username')}`)
+                                </script>
+                            </p>
                             <tr>
                                 <th style="text-align: left;" width="50%">Product</th>
                                 <th class="qtybox" width="10%">Quantity</th>
@@ -151,9 +164,10 @@
             <script>
                 function purchaseAlert() {
 
-                    
-                    alert(`${params.has('username')}
-                    Thank you for purchasing your EDC loadout. Your total is ${total.toFixed(2)}. We will send you a confirmation email of your order. In the email, we will have a form that has field to put your mailing address and confirmation code. Take a screenshot of this inorder prevent any discrepancies on our end.`);
+
+                    alert(`Thank you for purchasing your EDC loadout. Your total is ${total.toFixed(2)}. We will send you a confirmation email of your order. In the email, we will have a form that has field to put your mailing address and confirmation code. Take a screenshot of this inorder prevent any discrepancies on our end.`);
+
+
                 }
             </script>
 
