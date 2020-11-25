@@ -53,7 +53,7 @@ app.post("/process_purchase", function (request, response) {
             // using the invoice.html and all the data that is input
         }
         else {
-            response.redirect("./products_display.html?" + intoString + request.body.username)
+            response.redirect("./products_display.html?" + intoString + queryString.stringify.name)
         }
     }
 });
@@ -69,10 +69,10 @@ app.post("/process_register", function (request, response) {
     // if all data is valid, write out the user_data_info and send to invoice
 
     //regexp variables :: i tried to use the variables instead of the regExp but it didn't work for some reason
-    /* var usernameCheck = /[a-zA-Z0-9_.]+/;
-     var nameCheck = /[^a-zA-Z ]+$/;
-     var emailCheck = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$\);
-     */
+    var usernameCheck = /\w[^a-zA-Z0-9_.]+$/;
+    var nameCheck = /([^a-zA-Z ])\w\D+$/;
+    var emailCheck = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$\)/i;
+
 
     var error = [];
     //requires that the username only be letters and numbers 
@@ -82,15 +82,15 @@ app.post("/process_register", function (request, response) {
         return;
     }
     //username validation :: modified from stackoverflow :: test in https://regexr.com/
-    if (/\w[^a-zA-Z0-9_.]+$/.test(request.body.username.toLowerCase())) {
+    if (usernameCheck.test(request.body.username.toLowerCase())) {
         error.push('Only letters, numbers, periods and underscores.')
     }
     // name validation :: modified from stackoverflow :: test in https://regexr.com/
-    if (/[^a-zA-Z ]+$/.test(request.body.name)) { //only allows letters and spaces
+    if (nameCheck.test(request.body.name)) { //only allows letters and spaces
         error.push('Only letters are allowed.')
     }
     //email validation :: modified from stackoverflow :: test in https://regexr.com/
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$\)/i.test(request.body.email)) {
+    if (emailCheck.test(request.body.email)) {
         error.push('Email contains invalid characters.')
     }
     // verifys the passwords match
@@ -111,6 +111,7 @@ app.post("/process_register", function (request, response) {
         user_info_str = JSON.stringify(user_reg_data);
         fs.writeFileSync(user_data_info, user_info_str);
 
+        /// CHECK CHECK
         response.redirect("./invoice.html?" + queryString.stringify(request.query));
     } else {
         // redirects to an error notice page w/ hints
@@ -132,7 +133,6 @@ app.post("/process_login", function (request, response) {
     // console.log(request.body.password); //
     // checks if the user exists; if they exist, get the password
 
-
     if (typeof user_reg_data[request.body['username'].toLowerCase()] != 'undefined') {
         // console.log(userdata)
         userdata = user_reg_data[request.body['username'].toLowerCase()];
@@ -140,7 +140,7 @@ app.post("/process_login", function (request, response) {
             userdata_Uname = user_reg_data[request.body['username'].toLowerCase()];
             request.query.username = userdata_Uname;
 
-            response.redirect("./invoice.html?" + queryString.stringify(request.query));
+            response.redirect("./invoice.html?" + queryString.stringify(request.query) + `&username=${request.query.username}`);
         } else {
             response.redirect(`./forms/invalid_login.html?password=incorrect`);
         }
