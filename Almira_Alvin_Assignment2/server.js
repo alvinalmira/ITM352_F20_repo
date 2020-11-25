@@ -111,8 +111,9 @@ app.post("/process_register", function (request, response) {
         user_info_str = JSON.stringify(user_reg_data);
         fs.writeFileSync(user_data_info, user_info_str);
 
-        /// CHECK CHECK
-        response.redirect("./invoice.html?" + queryString.stringify(request.query));
+        /// CHECK CH
+        username = request.body.username.toLowerCase();
+        response.redirect("./invoice.html?" + queryString.stringify(username) + '&' + queryString.stringify(request.query));
     } else {
         // redirects to an error notice page w/ hints
         console.log(error)
@@ -123,15 +124,13 @@ app.post("/process_register", function (request, response) {
 
 
 });
-
-
-//
 //
 // from lab14 :: processes the Login form
 app.post("/process_login", function (request, response) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     // console.log(request.body.password); //
     // checks if the user exists; if they exist, get the password
+
 
     if (typeof user_reg_data[request.body['username'].toLowerCase()] != 'undefined') {
         // console.log(userdata)
@@ -140,7 +139,7 @@ app.post("/process_login", function (request, response) {
             userdata_Uname = user_reg_data[request.body['username'].toLowerCase()];
             request.query.username = userdata_Uname;
 
-            response.redirect("./invoice.html?" + queryString.stringify(request.query) + `&username=${request.query.username}`);
+            response.redirect("./invoice.html?" + queryString.stringify(request.body) + '&' + queryString.stringify(request.query));
         } else {
             response.redirect(`./forms/invalid_login.html?password=incorrect`);
         }
