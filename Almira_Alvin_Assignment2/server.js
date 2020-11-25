@@ -68,7 +68,7 @@ app.post("/process_register", function (request, response) {
     // response.send(request.body);
     // if all data is valid, write out the user_data_info and send to invoice
 
-    //regexp variables :: i tried to use the variables instead of the regExp but it didn't work for some reason
+    //regexp variables :: 
     var usernameCheck = /\w[^a-zA-Z0-9_.]+$/;
     var nameCheck = /([^a-zA-Z ])\w\D+$/;
     var emailCheck = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$\)/i;
