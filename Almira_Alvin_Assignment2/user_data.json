@@ -1,1 +1,7 @@
-{"itm352":{"name":"itm352 grader","password":"grader","email":"grader@gmail.com"}}
+{
+    "itm352": {
+        "name": "itm352 grader",
+        "password": "grader",
+        "email": "grader@gmail.com"
+    }
+}
