@@ -67,12 +67,12 @@ app.post("/process_register", function (request, response) {
     // process a simple register form
     // response.send(request.body);
     // if all data is valid, write out the user_data_info and send to invoice
-    
+
     //regexp variables :: i tried to use the variables instead of the regExp but it didn't work for some reason
-   /* var usernameCheck = /[a-zA-Z0-9_.]+/;
-    var nameCheck = /[^a-zA-Z ]+$/;
-    var emailCheck = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$\);
-    */
+    /* var usernameCheck = /[a-zA-Z0-9_.]+/;
+     var nameCheck = /[^a-zA-Z ]+$/;
+     var emailCheck = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$\);
+     */
 
     var error = [];
     //requires that the username only be letters and numbers 
@@ -112,25 +112,13 @@ app.post("/process_register", function (request, response) {
         fs.writeFileSync(user_data_info, user_info_str);
 
         response.redirect("./invoice.html?" + queryString.stringify(request.query));
-    }
-
-    if (error.length > 0) {
+    } else {
         // redirects to an error notice page w/ hints
         console.log(error)
-       response.redirect('./forms/error.html?quantities=lost?goback?tryagain'); 
+        response.redirect('./forms/error.html?quantities=lost?goback?tryagain');
 
     }
 
-    //        
-    /* 
-        if (request.body.password == request.body.repeat_password) {
-            // write updated object to user_data_info 
-            user_info_str = JSON.stringify(user_reg_data);
-            fs.writeFileSync(user_data_info, user_info_str);
-    
-            response.redirect("./invoice.html?");
-        }
-    */
 
 
 });
