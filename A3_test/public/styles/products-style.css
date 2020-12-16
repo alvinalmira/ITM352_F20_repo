@@ -1,6 +1,7 @@
 /* Alvin Alvin; finished and uploaded Nov5, fixed to make it work on server Nov6
 styling the products display */
 
+/* form styling */
 div .container {
   display: flex;
   justify-content: center;
@@ -8,7 +9,7 @@ div .container {
   margin-top: 50px;
   padding-bottom: 100px;
 }
-
+/* styles the images and item information */ 
 img {
   height: 100px;
   width: 100px;
@@ -32,7 +33,9 @@ img {
   margin: 20px 80px;
   padding: 30px 70px;
 }
+/* ----- */
 
+/*- styles the add to cart buton -*/
 .add-cart {
   text-decoration: none;
   position: absolute;
@@ -45,6 +48,15 @@ img {
   border-radius: 10px;
 }
 
+.prodSelector {
+  padding: 10px 30px;
+  margin: 5px 10px;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+
+/*--styles the footers-*/
 footer {
   padding: 30px;
 }

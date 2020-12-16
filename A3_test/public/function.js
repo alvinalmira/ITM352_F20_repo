@@ -18,8 +18,12 @@ function checkQuantityTextbox(textbox) { // this function uses the isNonNegInt t
 }
 // ---
 
+
+// ---
 function nav_bar() {
     // This makes a navigation bar to other product pages
+
+
 
     document.write(` <nav>
         <ul>
@@ -32,10 +36,24 @@ function nav_bar() {
             <!--calling navbar function in function.js-->
 
         </ul>
+    
     </nav>`);
 
+
 }
+
+
 // ---
+
+// --- selects the products
+function prodSelector(this_product_key, products_data) {
+    for (let products_key in products_data) {
+        if (products_key == this_product_key) continue;
+        document.write(`<li class="prodSelector" <a href = './display_products.html?products_key=${products_key}'>${products_key}</a></li>`);
+    }
+}
+
+//
 
 // --- Add to cart functions
 let carts = document.querySelectorAll('.add-cart'); // setting a document.querySelectorAll to a variable
@@ -113,6 +131,3 @@ function loadJSON(service, callback) {
     };
     xobj.send(null);
 }
-
-// This function makes a navigation bar from a products_data object
-

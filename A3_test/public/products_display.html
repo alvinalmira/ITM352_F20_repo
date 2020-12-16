@@ -1,8 +1,4 @@
 <!-- Alvin Alvin; uploaded  on Github on Nov18, fixed on Nov22 -->
-<script src="./products.js" type="text/javascript">
-
-    // links array
-</script>
 <script src="./function.js"></script>
 <script>
     function updateCart(product_index) {
@@ -30,6 +26,23 @@
         onLoadCartNumbers();
         loggedIn();
     }
+
+    // get the query string
+    let params = (new URL(document.location)).searchParams;
+    if (params.has('products_key')) {
+        var products_key = params.get('products_key');
+    } else {
+        console.log('no products key in query string');
+        document.stop;
+    }
+
+    var products;
+    loadJSON('grab_products_data', function (response) {
+        // Parsing JSON string into object
+        products = JSON.parse(response);
+    });
+    var this_product_key = ''
+
 </script>
 
 <!DOCTYPE html>
@@ -62,6 +75,9 @@
             nav_bar();
         </script>
     </header>
+    <script>
+        prodSelector(this_product_key, products)
+    </script>
     <!-- starting a form -->
     <form name="product_display" action="/process_purchase" method="POST">
         <div class='container'>

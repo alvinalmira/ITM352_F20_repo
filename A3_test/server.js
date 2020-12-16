@@ -1,5 +1,4 @@
-var data = require('./public/products.js'); // load products.js file and set to variable 'data'
-var products_array = data.products; // 'products_array' gets assigned to the products.js file
+
 const queryString = require('query-string'); // read variable 'queryString' as the loaded query-string module
 
 var express = require('express'); // load & cache express module
@@ -38,6 +37,11 @@ app.all('*', function (request, response, next) { //request methods
     next(); // goes onto next process
 });
 
+//this get products_data for the service in html
+app.post("/grab_products_data", function (request, response) {
+    response.json(products_data);
+    // console.log(products_data);
+});
 
 // Processes the products and the quanitites wanted and puts it into the invoice
 app.post("/addToCart", function (request, response) {
@@ -87,29 +91,42 @@ app.post("/process_register", function (request, response) {
     // if all data is valid, write out the user_data_info and send to invoice
 
     //regexp variables :: 
-    var usernameCheck = /\w[^a-zA-Z0-9_.]+$/;
-    var nameCheck = /([^a-zA-Z ])\w\D+$/;
-    var emailCheck = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$\)/i;
+    var usernameCheck = /^[a-z\d_.]{4,10}/i;
+    var nameCheck = /^[a-z ]+$/i;
+    var emailCheck = /^[\w\d.]+@[a-z]+.[\w]{2,3}/i;
+    var passwordCheck = /^[\w\d\D]{6,}/;
 
 
     var error = [];
     //requires that the username only be letters and numbers 
     // ––– if request.body.username matches user_reg_data, redirect back to page –––//
     if (user_reg_data[request.body['username'].toLowerCase()]) {
-        response.redirect(`./forms/username_taken.html?quantities=lost?goback?username=taken`);
+        response.redirect(`./forms/username_taken.html?goback?username=taken`);
         return;
     }
-    //username validation :: modified from stackoverflow :: test in https://regexr.com/
-    if (usernameCheck.test(request.body.username.toLowerCase())) {
-        error.push('Only letters, numbers, periods and underscores.')
+    //username validation :: test in https://rubular.com/
+    if (usernameCheck.test(request.body.username.toLowerCase()) == true) {
+        console.log(usernameCheck.test(request.body.username.toLowerCase()));
+    } else {
+        error.push('Only letters, numbers, periods, and underscores are allowed.')
     }
-    // name validation :: modified from stackoverflow :: test in https://regexr.com/
-    if (nameCheck.test(request.body.name)) { //only allows letters and spaces
+    // name validation :: test in https://rubular.com/
+    if (nameCheck.test(request.body.name) == true) { //only allows letters and spaces
+        console.log(nameCheck.test(request.body.name));
+    } else {
         error.push('Only letters are allowed.')
     }
-    //email validation :: modified from stackoverflow :: test in https://regexr.com/
-    if (emailCheck.test(request.body.email)) {
+    //email validation :: test in https://rubular.com/
+    if (emailCheck.test(request.body.email) == true) {
+        console.log(emailCheck.test(request.body.email));
+    } else {
         error.push('Email contains invalid characters.')
+    }
+    // password validation :: test in https://rubular.com/
+    if (passwordCheck.test(request.body.password) == true) {
+        console.log(passwordCheck.test(request.body.password));
+    } else {
+        error.push('Password does not meet required length.')
     }
     // verifys the passwords match
     if (request.body.password != request.body.repeat_password) {
@@ -135,7 +152,8 @@ app.post("/process_register", function (request, response) {
         /* replaced ("./invoice.html?" + queryString.stringify(username) + '&' + queryString.stringify(request.query)
 
         */
-        response.redirect("./public/products_display");
+       response.cookie("user", username, {maxAge: 10*1000})
+        response.redirect("./products_display.html");
     } else {
         // redirects to an error notice page w/ hints
 
