@@ -6,6 +6,20 @@
             "image": "./images/aer_citysling-black.jpg",
             "description": "The essential everyday carry sling. It has enough room to room to fit a portable charger, your phone, airpods, wallet, small tools, or possibly your Nintendo Switch. It has a water-resistant coating that will ensure that your belongings stay dry."
             
+        },
+        {
+            "name": "Alpaka Bravo x Sling",
+            "price": 109.00,
+            "image": "./images/alpaka_bravo.png",
+            "description": "Out of the house for long periods? Do you like storing your possessions in a sling? The Alpaka Bravo x Sling is the all-in-one multi-tool bag. It has a usb port for your external battery packs, weatherproof and cutproof fabric, and many more features. This is a sling that will not dissappoint."
+            
+        },
+        {
+            "name": "Alpaka Atom x Sling",
+            "price": 65.00,
+            "image": "./images/alpaka_atom.png",
+            "description": "Looking for a sling with a slim form factor? The Alpaka Atom x Sling has an anti-microbial lining, weatherproof fabric, RFID blocking, and anti-theft, lockable zippers. This sling are for those of you that carry light."
+            
         }
     ],
     "Tools": [
@@ -14,6 +28,20 @@
             "price": 79.99,
             "image": "./images/spartan_onyx.jpg",
             "description": "Essential tool for everyday tasks in a monochrome black finish. Has 12 functions and includes a corkscrew, bottle opener, and wire stripper."
+            
+        },
+        {
+            "name": "Snowflake Multi-tool: 19 in 1",
+            "price": 9.99,
+            "image": "./images/snowflake_tool.jpg",
+            "description": "It's a tool with a festive aura to it. You can use it in any occasion. It's the small package with many uses."
+            
+        },
+        {
+            "name": "HEROCLIP Mini",
+            "price": 15.00,
+            "image": "./images/hero_clip.png",
+            "description": "A small tool that can be equipped to your slings or any bag that you're carrying. The swivel-hook can be used to hoist your bag onto a chair or door, so you can keep your bag off floor. It has a max carrying weight of 40lbs."
             
         }
     ],
@@ -31,6 +59,13 @@
             "image": "./images/battery_backup_black.jpg",
             "description": "This battery back-up will charge your phone 5 times over if you needed it too. With the 10000mAh capactiy, you won't need to worry about having a dead phone when you're out and about."
             
+        },
+        {
+            "name": "Streamlight MicroStream Ultra-compact Aluminum body with AAA alkaline battery, 3.5 Inch - 1.04 oz - 45 Lumens - 66318, Black",
+            "price": 30.00,
+            "image": "./images/miniflashlight.jpg",
+            "description": "A must have piece of tech to have on hand. In need of light? This compact flashlight will give you the necessary brightness you need. "
+            
         }
     ],
     "Protective Gear": [
@@ -40,6 +75,18 @@
             "image": "./images/black_face_mask.jpg",
             "description": "The most essential face protection but in black. With this pack of 50 disposable masks, you can protect yourself from the polution, germs, and pollen. Be sure to DISPOSE of your mask properly after a days' use."
             
+        },
+        {
+            "name": "PURELL Advanced Hand Sanitizer Variety Pack, Naturals and Refreshing Gel, 1 fl oz portable flip-cap bottle with JELLY WRAP Carrier (Pack of 8)",
+            "price": 15.00,
+            "image": "./images/purell.jpg",
+            "description": "One of the most important piece of protection you need. Hand Santizer. Purell is the top ranked hand sanitzer you can buy. Don't think, just buy."
+        },
+        {
+            "name": "Premoistened Sanitizing Hand Wipes, Towelettes Individually Wrapped, 100/box",
+            "price": 30.00,
+            "image": "./images/purell_wipes.jpg",
+            "description": "If you want to be extra safe and clean, pair the purell wipes with the hand sanitizer. Germs have no chance against you."
         }
     ]
 }

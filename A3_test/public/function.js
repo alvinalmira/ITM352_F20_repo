@@ -43,7 +43,7 @@ function nav_bar() {
 
             <li><a class="index" href="./index.html">Your EDC</a></li>
             <li><a class="cart" href="./invoice.html">Cart:<span>0</span></a></li>
-            <li><a class="products" href="./products_display.html">Products</a></li>
+            <li><a class="products" href="./products_display.html">Product Categories</a></li>
             <li><a class="loginReg" id="loginReg" href="./forms/login.html">Login/Signup</a></li>
 
             <!--calling navbar function in function.js-->
@@ -100,7 +100,7 @@ function cartNumbers() {
     // if productNumbers exists, add 1 to products number
     if (productNumbers) {
         sessionStorage.setItem('cartNumbers', productNumbers + 1);
-        document.querySelector('.cart span').textContent = productNumbers + 1;
+        document.querySelector('.cart span').innerHTML = productNumbers + 1;
 
         // if productNumbers does not exist, make carts content equal to 1
     } else {
@@ -108,6 +108,7 @@ function cartNumbers() {
         document.querySelector('.cart span').textContent = 1;
     }
 }
+
 
 
 // --------

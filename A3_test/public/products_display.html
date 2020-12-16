@@ -105,7 +105,7 @@
                                         https://stackoverflow.com/questions/1601933/how-do-i-stop-a-web-page-from-scrolling-to-the-top-when-a-link-is-clicked-that-t
                                         
                                         the discussion talks about preventing the page from scrolling up when you click an a tag-->
-                                    <a class="add-cart" href="javascript:void(0);" onclick="updateCart(${i});" >Add to Cart</a>
+                                    <a class="add-cart" href="javascript:void(0);" onclick="updateCart(${i}); cartNumbers(${i});" >Add to Cart</a>
                 
                                 </section>`
                         );
@@ -117,8 +117,7 @@
         <!-- inputting a footer-->
 
         <footer>
-            <!-- TOOK OUT confirmBtn: REMOVE FROM SERVER-->
-            <div class='confirmBtn'><input class='confirm' type="submit" value="Confirm" name="submitPurchase"></div>
+        
         </footer>
     </form>
 </body>
