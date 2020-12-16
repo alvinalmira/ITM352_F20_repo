@@ -1,0 +1,105 @@
+<!-- Alvin Alvin; uploaded  on Github on Nov18, fixed on Nov22 -->
+<script src="./products.js" type="text/javascript">
+
+    // links array
+</script>
+<script src="./function.js"></script>
+<script>
+    function updateCart(product_index) {
+        console.log(document.getElementById("quantity" + product_index).value);
+
+        var payload = {
+            "prod_key": "Slings",
+            "prod_index": product_index,
+            "prod_qty": document.getElementById("quantity" + product_index).value
+        };
+
+        fetch("/addToCart",
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(function (res) { return res.json(); })
+            .then(function (data) { alert(JSON.stringify(data)) })
+    }
+
+    window.onload = function () {
+        onLoadCartNumbers();
+        loggedIn();
+    }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDC starter pack</title>
+    <link rel="shortcut icon" type="image/png" href="./images/favicon.png">
+
+    <!-- linking the stylesheets -->
+    <link rel="stylesheet" href="./styles/navbar.css">
+    <link rel="stylesheet" href="./styles/products-style.css">
+
+    <!-- styling the page -->
+
+
+    <style>
+        body {
+            font-family: 'Oswald', 'Sans';
+        }
+    </style>
+</head>
+
+<body>
+    <!-- making a list -->
+    <header>
+        <script>
+            nav_bar();
+        </script>
+    </header>
+    <!-- starting a form -->
+    <form name="product_display" action="/process_purchase" method="POST">
+        <div class='container'>
+            <main>
+                <!-- setting up a script to write each products name onto the page-->
+                <script>
+                    for (i = 0; i < products.length; i++) {
+                        document.write(`
+                                <section class="item">
+                                    <h2>${products[i].name}</h2>
+                                    <br><img class='image' src="${products[i].image}">
+                                    <p>$${products[i].price}</p>
+                                    <p class="description"><em>${products[i].description}</em></p>
+                                    <label class="label" id="quantity${i}_label">Quantity: </label>
+                                    <input class="prod_qty" type="text" placeholder="0" name="quantity${i}" id="quantity${i}"
+                                    onkeyup="checkQuantityTextbox(this);"></input>
+
+                                    <!--making an add to cart button
+                                        https://stackoverflow.com/questions/1601933/how-do-i-stop-a-web-page-from-scrolling-to-the-top-when-a-link-is-clicked-that-t
+                                        
+                                        the discussion talks about preventing the page from scrolling up when you click an a tag-->
+                                    <a class="add-cart" href="javascript:void(0);" onclick="updateCart(${i});" >Add to Cart</a>
+                
+                                </section>`
+                        );
+                    }
+                </script>
+            </main>
+        </div>
+
+        <!-- inputting a footer-->
+
+        <footer>
+            <!-- TOOK OUT confirmBtn: REMOVE FROM SERVER-->
+            <div class='confirmBtn'><input class='confirm' type="submit" value="Confirm" name="submitPurchase"></div>
+        </footer>
+    </form>
+</body>
+
+
+</html>

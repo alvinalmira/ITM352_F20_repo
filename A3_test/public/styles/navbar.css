@@ -1,0 +1,95 @@
+/* Alvin Alvin; finished and uploaded Nov5, fixed to make it work on server Nov6 
+styling the nav bar, used help from w3schools.com*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  height: 140px;
+  background-color: floralwhite;
+}
+
+nav {
+  position: absolute;
+  margin-top: 10px;
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 50px 60px 0 60px;
+}
+
+nav li {
+  list-style: none;
+  display: inline-block;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+nav li span {
+  padding-left: 5px;
+}
+
+li a {
+  padding: 25px;
+  background-color: black;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+  position: sticky;
+border-radius: 8px;
+}
+li a:hover {
+  background-color: gray;
+}
+.products {
+  background-color: darkslategray;
+}
+
+
+
+/* original nav bar styling
+ul {
+  list-style-type: none;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  padding: 0;
+  overflow: hidden;
+  position: static;
+  font-size: large;
+}
+
+ul li {
+  list-style-type: none;
+  background-color: black;
+  width: 150px;
+  float: left;
+  text-align: center;
+}
+
+li a {
+  padding: 22px;
+  text-decoration: none;
+  color: white;
+  display: block;
+  line-height: 50px;
+}
+
+li a:hover {
+  background-color: gray;
+}
+.products {
+  background-color: darkslategray;
+}
+
+ul li ul li {
+    display: hidden;
+}
+
+ul li:hover ul li {
+    display: block;
+}

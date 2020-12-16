@@ -1,0 +1,85 @@
+/* Alvin Alvin; finished and uploaded Nov5, fixed to make it work on server Nov6
+styling the products display */
+
+div .container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 50px;
+  padding-bottom: 100px;
+}
+
+img {
+  height: 100px;
+  width: 100px;
+  margin-right: 20px;
+  margin-left: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.description {
+  margin: 10px 20px;
+}
+
+.label,
+.prod_qty {
+  margin: 8px;
+}
+
+.item {
+  background-color: ghostwhite;
+  margin: 20px 80px;
+  padding: 30px 70px;
+}
+
+.add-cart {
+  text-decoration: none;
+  position: absolute;
+  background-color: royalblue;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  padding: 7px;
+  margin: 2px 5px;
+  border-radius: 10px;
+}
+
+footer {
+  padding: 30px;
+}
+
+/* original styling
+img {
+  width: 150px;
+  height: 150px;
+}
+div {
+  column-count: inherit;
+  column-gap: 30px;
+  column-rule-style: solid;
+  column-rule-color: wheat;
+  column-rule-width: 6px;
+  padding: 2.5em;
+  border-style: dotted;
+  border-color: wheat;
+  margin-top: 0px;
+  text-align: center;
+}
+
+main:not(ul li) {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+p {
+  text-align: center;
+}
+
+div.confirmBtn {
+  padding: 10px;
+  background-color: grey;
+  margin: 10px 10px;
+}
+*/

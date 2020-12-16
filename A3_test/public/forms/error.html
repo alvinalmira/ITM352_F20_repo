@@ -1,0 +1,26 @@
+<!-- THIS IS AN ERROR PAGE -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERROR</title>
+    <link rel="shortcut icon" type="image/png" href="./img/favicon_error.png">
+
+    <script src="/Almira_Alvin_Assignment2/server.js"></script>
+</head>
+<body style="text-align: center; background-color: whitesmoke;">
+
+<p style="text-align: center; margin: 15%; color: darkred; font-size: 2em;"><b>
+    YOU MAY HAVE ENTERED: INVALID CHARACTERS IN THE USERNAME, NAME, OR EMAIL. BE SURE THAT YOU HAVE TYPED IN YOUR INFORMATION CORRECTLY. GO BACK AND TRY AGAIN.
+</b></p>
+<p style="font-size: large; color: darkblue; margin: 5%; "><b>Hint: Letters, numbers, periods, and hyphens are the allowed characters in the username. Your name should only have letters (we apologize if you have numbers in your name like X Æ A-12). Your email must only contain: letters, numbers, periods, and underscores. Be careful when you type in your password, you might accidently hit a 2 instead of a w.</b></p>
+
+<p id="ErrorNotice" style="font-size: large; color: black; margin: 5%; ">
+<script>
+    let notice = params.has('errors');
+    document.getElementByID("ErrorNotice").innerHTML= notice;
+</script></p>
+    
+</body>
+</html>

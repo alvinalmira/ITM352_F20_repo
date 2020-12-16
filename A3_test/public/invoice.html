@@ -1,0 +1,189 @@
+<!-- Alvin Almira :: registration page and CSS based off https://www.youtube.com/watch?v=3qmL-ebPYzw -->
+<!-- Alvin Alvin; uploaded  on Github on Nov18, fixed on Nov22-24 -->
+<script src="./products.js" type="text/javascript"> //uses a get request to get the products array
+</script>
+<script src="./user_data.json" type="json"></script>
+
+<script>
+    // from invoices and assignment1
+    let params = (new URL(document.location)).searchParams; //looks at submitPurchase & querystring, and looks for quantities
+    var quantities = [];
+
+    // processing the invoice; makes a form from the data
+    // loop that get info
+    if (params.has('submitPurchase')) {
+        for (i = 0; i < products.length; i++) {
+            if (params.has(`quantity${i}`)) {
+                a_quantity = params.get(`quantity${i}`);
+                quantities[i] = a_quantity;
+            }
+        }
+
+    }
+
+    if (params.has('username')) {
+        var name = params.get('name');
+        var username = params.get('username');
+    }
+
+    function purchaseAlert() {
+
+
+        alert(`Thank you for purchasing your EDC loadout. Your total is ${total.toFixed(2)}. We will send you a confirmation email of your order. In the email, we will have a form that has field to put your mailing address and confirmation code. Take a screenshot of this inorder prevent any discrepancies on our end.`);
+
+
+    }
+</script>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="shortcut icon" type="image/png" href="./images/favicon.png">
+    <link rel="stylesheet" href="./styles/navbar.css">
+    <link rel="stylesheet" href="./styles/checkout.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+
+    <style>
+        body {
+            font-family: 'Sans';
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li><a class="index" href="./index.html">Your EDC</a></li>
+                <li><a class="cart" href="./invoice.html">Cart</a></li>
+                <li><a class="products" href="./products_display.html">Products</a></li>
+
+
+                <!--calling navbar function in function.js-->
+
+            </ul>
+        </nav>
+    </header>
+    <br>
+    <div class="row">
+        <form name="completePurchase">
+            <div class="col-25">
+                <div class="container">
+                    <!--invoice table-->
+                    <table border="3">
+                        <tbody>
+                            <p>
+                                <script>
+                                    document.write(`${document.cookie}`)
+                                </script>
+                            </p>
+                            <tr>
+                                <th style="text-align: left;" width="50%">Product</th>
+                                <th class="qtybox" width="10%">Quantity</th>
+                                <th width="20%">Price</th>
+                                <th width="20%">Extended Price</th>
+                            </tr>
+                            <script>
+                                subtotal = 0
+                                for (i = 0; i < products.length; i++) {
+                                    if (quantities[i] > 0) {
+                                        // makes products row
+                                        extended_price = quantities[i] * products[i].price
+                                        subtotal += extended_price;
+                                        document.write(`
+            <tr>
+              <td style="text-align: left;" width="40%">${products[i].name}</td>
+              <td width="20%">${quantities[i]}</td>
+              <td width="20%">\$${products[i].price}</td>
+              <td width="20%">\$${extended_price.toFixed(2)}</td>
+            </tr>
+            `);
+                                    }
+                                }
+                                // Compute tax
+                                var tax_rate = 0.0575;
+                                var tax = tax_rate * subtotal;
+
+                                // Compute shipping
+                                if (subtotal == 0) {
+                                    shipping = 0;
+                                }
+                                else if (subtotal <= 50) {
+                                    shipping = 2;
+                                }
+                                else if (subtotal <= 100) {
+                                    shipping = 5;
+                                }
+                                else {
+                                    shipping = 0.05 * subtotal; // 5% of subtotal
+                                }
+
+                                // Compute grand total
+                                var total = subtotal + tax + shipping;
+
+                            </script>
+                            <!--    makes subtotal, shipping, tax, and total -->
+                            <tr>
+                                <td colspan="4" width="100%">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" width="67%">Sub-total</td>
+                                <td width="54%">$
+                                    <script>document.write(subtotal.toFixed(2));</script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" width="67%"><span>Tax (
+                                        <script>document.write(100 * tax_rate);</script>% )</span></td>
+                                <td width="54%">$
+                                    <script>document.write(tax.toFixed(2));</script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" width="67%">Shipping</span></td>
+                                <td width="54%">$
+                                    <script>document.write(shipping.toFixed(2));</script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" width="67%"><strong>Total</strong></td>
+                                <td width="54%"><strong>$
+                                        <script>document.write(total.toFixed(2));</script></strong></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;" colspan="4"> <strong>OUR SHIPPING POLICY IS: A subtotal
+                                        $0 -
+                                        $49.99 will be $2 shipping
+                                        A subtotal $50 - $99.99 will be $5 shipping
+                                        Subtotals over $100 will be charged 5% of the subtotal amount.</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <script>
+                function purchaseAlert() {
+
+
+                    alert(`Thank you for purchasing your EDC loadout. Your total is ${total.toFixed(2)}. We will send you a confirmation email of your order. In the email, we will have a form that has field to put your mailing address and confirmation code. Take a screenshot of this inorder prevent any discrepancies on our end.`);
+
+
+                }
+            </script>
+
+            <input type="submit" value="Purchase" name="completePurchase" class="purchase-btn"
+                onclick="purchaseAlert()">
+
+        </form>
+    </div>
+    </div>
+</body>
