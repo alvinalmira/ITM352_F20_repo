@@ -1,11 +1,12 @@
 <!-- Alvin Alvin; uploaded  on Github on Nov18, fixed on Nov22 -->
 <script src="./function.js"></script>
 <script>
+    //---- function for add to cart button that gets the /addToCart process from the server
     function updateCart(product_index) {
         console.log(document.getElementById("quantity" + product_index).value);
 
         var payload = {
-            "prod_key": "Slings",
+            "prod_key": products_key,
             "prod_index": product_index,
             "prod_qty": document.getElementById("quantity" + product_index).value
         };
@@ -18,15 +19,17 @@
                 },
                 body: JSON.stringify(payload)
             })
-            .then(function (res) { return res.json(); })
-            .then(function (data) { alert(JSON.stringify(data)) })
+            .then(function (res) { return res.json(); }) // return with a response of the JSON data
+            .then(function (data) { alert(JSON.stringify(data)) }) // stringifies the JSON data and alerts the user when the products are added to the cart
     }
-
+    // -- 
+    // -- anonymous functions that calls the functions from function.js
     window.onload = function () {
         onLoadCartNumbers();
         loggedIn();
     }
 
+    // searches the URL for the products key \\ REFERENCE: Assignment 3 Example code
     // get the query string
     let params = (new URL(document.location)).searchParams;
     if (params.has('products_key')) {
@@ -36,10 +39,11 @@
         document.stop;
     }
 
-    var products;
+    // ---  this loads the JSON data from the server by loadJSON app.post("/grab_products_data") \\ REFERENCE: Assignment 3 Example code
+    var products_data;
     loadJSON('grab_products_data', function (response) {
         // Parsing JSON string into object
-        products = JSON.parse(response);
+        products_data = JSON.parse(response);
     });
     var this_product_key = ''
 
@@ -76,14 +80,16 @@
         </script>
     </header>
     <script>
-        prodSelector(this_product_key, products)
+        prodSelector(this_product_key, products_data)
     </script>
     <!-- starting a form -->
-    <form name="product_display" action="/process_purchase" method="POST">
+    <form name="product_display" action="/addToCart" method="POST">
         <div class='container'>
             <main>
                 <!-- setting up a script to write each products name onto the page-->
                 <script>
+                    var products = products_data[products_key];
+                    
                     for (i = 0; i < products.length; i++) {
                         document.write(`
                                 <section class="item">

@@ -18,8 +18,21 @@ function checkQuantityTextbox(textbox) { // this function uses the isNonNegInt t
 }
 // ---
 
+// REFERENCE Assignment3 example code \\ This function asks the server for a "service" and converts the response to text. 
+function loadJSON(service, callback) {
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('POST', service, false);
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+        }
+    };
+    xobj.send(null);
+}
 
-// ---
+// --- referenced and changed from the Assignment 3 example code
 function nav_bar() {
     // This makes a navigation bar to other product pages
 
@@ -45,17 +58,16 @@ function nav_bar() {
 
 // ---
 
-// --- selects the products
-function prodSelector(this_product_key, products_data) {
-    for (let products_key in products_data) {
+// --- selects the products \\ REFERENCE: Assignment 3 example code
+function prodSelector(this_product_key, products) {
+    for (let products_key in products) {
         if (products_key == this_product_key) continue;
-        document.write(`<li class="prodSelector" <a href = './display_products.html?products_key=${products_key}'>${products_key}</a></li>`);
+        document.write(`<div class="prodBar" ><ul class="Category"><li><a href = './products_display.html?products_key=${products_key}'>${products_key}</a></li></ul></div>`);
     }
 }
-
 //
 
-// --- Add to cart functions
+// --- Add to cart functions \\ REFERENCE: https://www.youtube.com/watch?v=PoTGs38DR9E [Youtuber: Telmo Sampaio]
 let carts = document.querySelectorAll('.add-cart'); // setting a document.querySelectorAll to a variable
 
 // whenever you click Add to cart, it will listen for a click event and increase the more you click
@@ -98,7 +110,7 @@ function cartNumbers() {
 }
 
 
-// ---
+// --------
 
 // --- changes login to logout button
 function loggedIn() {
@@ -117,17 +129,4 @@ function loggedIn() {
 
 // ---
 
-// --- from assignment3 example code:: for the navbar 
-// This function asks the server for a "service" and converts the response to text. 
-function loadJSON(service, callback) {
-    var xobj = new XMLHttpRequest();
-    xobj.overrideMimeType("application/json");
-    xobj.open('POST', service, false);
-    xobj.onreadystatechange = function () {
-        if (xobj.readyState == 4 && xobj.status == "200") {
-            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-            callback(xobj.responseText);
-        }
-    };
-    xobj.send(null);
-}
+

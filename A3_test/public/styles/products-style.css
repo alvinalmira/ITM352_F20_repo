@@ -1,6 +1,30 @@
 /* Alvin Alvin; edited DEC15,
 styling the products display */
 
+/* styling the prodSelector*/
+.Category {
+  list-style-type: none;
+  padding: 3px;
+  margin: 0;
+  text-align: center;
+}
+
+.Category li {
+  display: inline;
+  font-size: medium;
+}
+
+.Category li a {
+  text-decoration: none;
+  color: black;
+  padding: 7px 20px;
+  margin: 2px;
+}
+
+.Category li a:hover {
+  background-color: wheat;
+}
+
 /* form styling */
 div .container {
   display: flex;
@@ -9,7 +33,7 @@ div .container {
   margin-top: 50px;
   padding-bottom: 100px;
 }
-/* styles the images and item information */ 
+/* styles the images and item information */
 img {
   height: 100px;
   width: 100px;
@@ -47,14 +71,6 @@ img {
   margin: 2px 5px;
   border-radius: 10px;
 }
-
-.prodSelector {
-  padding: 10px 30px;
-  margin: 5px 10px;
-  list-style-type: none;
-  cursor: pointer;
-}
-
 
 /*--styles the footers-*/
 footer {

@@ -50,36 +50,7 @@ app.post("/addToCart", function (request, response) {
 
     response.json({ message: "product added." });
 
-    /*
-    //check if quantities are nonnegative integers
-    if (typeof POST['submitPurchase'] != 'undefined') {
-        var validQty = true; // creating a variabale if it's true
-        var anyQuantity = false;
-        for (i = 0; i < products.length; i++) {
-
-            qty = POST[`quantity${i}`];
-            anyQuantity = anyQuantity || qty > 0; // If it has a value bigger than 0, passes
-            validQty = validQty && isNonNegInt(qty);    // for both a quantity over 0 and is valid    
-        }
-        // if all quantities are valid, converts the data into strings
-        let intoString = queryString.stringify(POST);
-        if (validQty && anyQuantity) {
-            response.redirect("./forms/login.html?" + intoString); // changed the ./path from invoice.html ******
-            // using the invoice.html and all the data that is input
-        }
-        else {
-            response.redirect("./products_display.html?" + intoString + queryString.stringify.name)
-        }
-    }
-    */
 });
-
-
-// test code
-
-
-
-//
 
 ///////////// Registration and Login processing
 
