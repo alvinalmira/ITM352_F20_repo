@@ -1,22 +1,22 @@
+// Alvin Alvin; uploaded  on Github on Nov18, fixed on Nov22-24 ||  from assignment 1 screencast and lab 13
+1
+// Recognitions and REFRENENCES: Daniel Port for the screencasts. Rick Kazman and his help with lab14, from assignment 1 screencast and lab 13 - 15, Daniel Port's workshops )
 
-const queryString = require('query-string'); // read variable 'queryString' as the loaded query-string module
-
-var express = require('express'); // load & cache express module
-var app = express(); // assign module to variable 'app'
-var myParser = require("body-parser"); //load & cache body parser module
+const express = require('express'); // load & cache express module
+const app = express(); // assign module to variable 'app'
+const cookieParser = require('cookie-parser'); // loads cookie parser; allows cookies to be created & deleted
+const myParser = require("body-parser"); //load & cache body parser module
 const session = require('express-session'); // loads sessions;
 const fs = require('fs'); // loads fs actions like read, write, etc...
-const cookierParser = require('cookie-parser'); // loads cookie parser; allows cookies to be created & deleted
 
 const products_data = require('./products.json'); // loads the products.json !!! change this
-const cookieParser = require('cookie-parser');
 
-app.use(cookieParser());
-app.use(session({ secret: "EDC is a lifestyle" }));
+app.use(cookieParser()); // calls cookie-parser module
+app.use(session({ secret: "EDC is a lifestyle" })); // creates a session
+
 
 // declares the user data json file
 const user_data_info = 'user_data.json';
-
 // from lab14 :: check if file exists before reading
 if (fs.existsSync(user_data_info)) {
     stats = fs.statSync(user_data_info);
@@ -30,8 +30,8 @@ if (fs.existsSync(user_data_info)) {
 app.use(myParser.urlencoded({ extended: true })); //gets data in the form body
 app.use(myParser.json()); // adds JSON body parser middlware
 
-
-app.all('*', function (request, response, next) { //request methods
+// from assignment 1-3 examples
+app.all('*', function (request, response, next) { // any request methods
     console.log(request.method + ' to ' + request.path); //write in the console the request method and its path
     // console.log("session id is" + request.session.id);
     next(); // goes onto next process
@@ -53,8 +53,7 @@ app.post("/addToCart", function (request, response) {
 });
 //
 
-///////////// Registration and Login processing
-
+///------- Registration and Login processing
 // from lab 14 :: to process the registration form
 app.post("/process_register", function (request, response) {
 
@@ -118,13 +117,13 @@ app.post("/process_register", function (request, response) {
         user_info_str = JSON.stringify(user_reg_data);
         fs.writeFileSync(user_data_info, user_info_str);
 
-        /// CHECK CH
+        // checks username if they match
         username = request.body.username.toLowerCase();
 
         /* replaced ("./invoice.html?" + queryString.stringify(username) + '&' + queryString.stringify(request.query)
 
         */
-       response.cookie("user", username, {maxAge: 100 *1000})
+        response.cookie("user", username, { maxAge: 100 * 1000 })
         response.redirect("./products_display.html");
     } else {
         // redirects to an error notice page w/ hints
@@ -142,8 +141,6 @@ app.post("/process_register", function (request, response) {
 // from lab14 :: processes the Login form
 app.post("/process_login", function (request, response) {
 
-
-
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     // checks if the user exists; if they exist, get the password
     if (typeof user_reg_data[request.body['username'].toLowerCase()] != 'undefined') {
@@ -153,10 +150,8 @@ app.post("/process_login", function (request, response) {
             userdata_Uname = user_reg_data[request.body['username'].toLowerCase()];
             request.query.username = userdata_Uname;
 
-
             /* took out "./invoice.html?" + queryString.stringify(request.body) + '&' + queryString.stringify(request.query)
             */
-
             // cookies and sesssions
             response.cookie("user", request.body['username'], { maxAge: 100 * 1000 });
             //
@@ -169,14 +164,12 @@ app.post("/process_login", function (request, response) {
     }
 });
 
-
+// when path is called, the cookie is deleted and the user is redirected to the index.html page
 app.get("/logout", function (request, response) {
     console.log(request.cookie);
     response.clearCookie("user");
     response.redirect("./index.html");
 });
-
-
 
 
 //from lab12 || repeats the isNonNegInt function from the products_display.html 

@@ -1,14 +1,7 @@
 <!-- Alvin Almira :: registration page and CSS based off https://www.youtube.com/watch?v=3qmL-ebPYzw -->
-<!-- Alvin Alvin; uploaded  on Github on Nov18, fixed on Nov22-24 -->
+<!-- Alvin Alvin; edits being made December 16 -->
 
 <script>
-
-    function purchaseAlert() {
-
-
-        alert(`Thank you for purchasing your EDC loadout. Your total is ${total.toFixed(2)}. We will send you a confirmation email of your order. In the email, we will have a form that has field to put your mailing address and confirmation code. Take a screenshot of this inorder prevent any discrepancies on our end.`);
-
-    }
 
     function loggedIn() {
 
@@ -55,7 +48,7 @@
 
                 <li><a class="index" href="./index.html">Your EDC</a></li>
                 <li><a class="cart" href="./invoice.html">Cart</a></li>
-                <li><a class="products" href="./products_display.html">Products</a></li>
+                <li><a class="products" href="./products_display.html">Products Categories</a></li>
                 <li><a class="loginReg" id="loginReg" href="./forms/login.html">Login/Signup</a></li>
 
 
@@ -158,6 +151,7 @@
                                         <script>document.write(total.toFixed(2));</script>
                                     </strong></td>
                             </tr>
+                            <!----------->
                             <tr>
                                 <td style="text-align: center;" colspan="4"> <strong>OUR SHIPPING POLICY IS: A subtotal
                                         $0 -
@@ -170,8 +164,8 @@
                     </table>
                 </div>
             </div>
-
             <script>
+
                 function purchaseAlert() {
 
 
@@ -180,9 +174,8 @@
 
                 }
             </script>
-
-            <input type="submit" value="Purchase" name="completePurchase" class="purchase-btn"
-                onclick="purchaseAlert()">
+            <input type="button" value="Purchase" name="completePurchase" class="purchase-btn"
+                onclick="purchaseAlert();">
 
         </form>
     </div>

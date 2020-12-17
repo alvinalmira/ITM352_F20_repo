@@ -32,14 +32,9 @@ function loadJSON(service, callback) {
     xobj.send(null);
 }
 
-// --- Test security
-// ---
-
 // --- referenced and changed from the Assignment 3 example code
 function nav_bar() {
     // This makes a navigation bar to other product pages
-
-
 
     document.write(` <nav>
         <ul>
@@ -54,14 +49,10 @@ function nav_bar() {
         </ul>
     
     </nav>`);
-
-
 }
-
-
 // ---
 
-// --- selects the products \\ REFERENCE: Assignment 3 example code
+// --- selects the products category to display \\ REFERENCE: Assignment 3 example code
 function prodSelector(this_product_key, products) {
     for (let products_key in products) {
         if (products_key == this_product_key) continue;
@@ -98,9 +89,8 @@ function cartNumbers() {
 
     //  it parses the productNumbers into an integer from a string
     productNumbers = parseInt(productNumbers);
-    // if productNumbers is 0, add quantity to products number
+    // if productNumbers is 1, add quantity to products number
     if (productNumbers) {
-
 
 
         sessionStorage.setItem('cartNumbers', productNumbers + 1);
@@ -127,11 +117,9 @@ function loggedIn() {
         document.getElementById("loginReg").innerHTML = `Logout, ${cookie_obj['user']}`;
     }
 }
-
-
 // ---
 
-// --- security to stop getting to invoice from products_display
+// --- security to stop users from getting to invoice from products_display
 function userCartVerify() {
     if (document.cookie == "") {
         document.getElementById("cart").href = "javascript:void(0)";
