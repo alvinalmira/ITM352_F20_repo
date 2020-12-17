@@ -8,8 +8,12 @@
         var payload = {
             "prod_key": products_key,
             "prod_index": product_index,
-            "prod_qty": document.getElementById("quantity" + product_index).value
+            "prod_qty": document.getElementById("quantity" + product_index).value,
+            "prod_price": document.getElementById("price").innerHTML,
+            "prod_name": document.getElementById("product-name").innerHTML
         };
+        console.log(payload.prod_price);
+        console.log(payload.prod_name);
 
         fetch("/addToCart",
             {
@@ -48,7 +52,7 @@
     });
     var this_product_key = ''
 
-    
+
 </script>
 
 
@@ -97,9 +101,9 @@
                     for (i = 0; i < products.length; i++) {
                         document.write(`
                                 <section class="item">
-                                    <h2>${products[i].name}</h2>
+                                    <h2 id="product-name">${products[i].name}</h2>
                                     <br><img class='image' src="${products[i].image}">
-                                    <p>$${products[i].price}</p>
+                                    <p id="price">$${products[i].price}</p>
                                     <p class="description"><em>${products[i].description}</em></p>
                                     <label class="label" id="quantity${i}_label">Quantity: </label>
                                     <input class="prod_qty" type="text" placeholder="0" name="quantity${i}" id="quantity${i}"
@@ -110,8 +114,7 @@
                                         
                                         the discussion talks about preventing the page from scrolling up when you click an a tag-->
                                     <a class="add-cart" href="javascript:void(0);" onclick="updateCart(${i}); cartNumbers(${i});" >Add to Cart</a>
-                
-                                </section>`
+                </section>`
                         );
                     }
                 </script>
