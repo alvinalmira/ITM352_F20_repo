@@ -32,6 +32,9 @@ function loadJSON(service, callback) {
     xobj.send(null);
 }
 
+// --- Test security
+// ---
+
 // --- referenced and changed from the Assignment 3 example code
 function nav_bar() {
     // This makes a navigation bar to other product pages
@@ -42,7 +45,7 @@ function nav_bar() {
         <ul>
 
             <li><a class="index" href="./index.html">Your EDC</a></li>
-            <li><a class="cart" href="./invoice.html">Cart:<span>0</span></a></li>
+            <li><a class="cart" id="cart" href="javascript:void(0)" onclick="userCartVerify();"  >Cart:<span>0</span></a></li>
             <li><a class="products" href="./products_display.html">Product Categories</a></li>
             <li><a class="loginReg" id="loginReg" href="./forms/login.html">Login/Signup</a></li>
 
@@ -74,7 +77,6 @@ let carts = document.querySelectorAll('.add-cart'); // setting a document.queryS
 for (let i = 0; i < carts.length; i++) {
     carts[i].addEventListener('click', () => {
         cartNumbers();
-
         // to see if the eventListener works
         console.log("added to cart");
     })
@@ -94,11 +96,13 @@ function cartNumbers() {
 
     let productNumbers = sessionStorage.getItem('cartNumbers');
 
-
     //  it parses the productNumbers into an integer from a string
     productNumbers = parseInt(productNumbers);
-    // if productNumbers exists, add 1 to products number
+    // if productNumbers is 0, add quantity to products number
     if (productNumbers) {
+
+
+
         sessionStorage.setItem('cartNumbers', productNumbers + 1);
         document.querySelector('.cart span').innerHTML = productNumbers + 1;
 
@@ -108,9 +112,6 @@ function cartNumbers() {
         document.querySelector('.cart span').textContent = 1;
     }
 }
-
-
-
 // --------
 
 // --- changes login to logout button
@@ -122,7 +123,7 @@ function loggedIn() {
 
         console.log(cookie_obj);
 
-
+        document.getElementById("loginReg").href = `/logout`;
         document.getElementById("loginReg").innerHTML = `Logout, ${cookie_obj['user']}`;
     }
 }
@@ -130,4 +131,11 @@ function loggedIn() {
 
 // ---
 
-
+// --- security to stop getting to invoice from products_display
+function userCartVerify() {
+    if (document.cookie == "") {
+        document.getElementById("cart").href = "javascript:void(0)";
+    } else {
+        document.getElementById("cart").href = "./invoice.html";
+    }
+}

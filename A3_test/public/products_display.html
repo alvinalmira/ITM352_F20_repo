@@ -22,7 +22,8 @@
             .then(function (res) { return res.json(); }) // return with a response of the JSON data
             .then(function (data) { alert(JSON.stringify(data)) }) // stringifies the JSON data and alerts the user when the products are added to the cart
     }
-    // -- 
+    // --
+
     // -- anonymous functions that calls the functions from function.js
     window.onload = function () {
         onLoadCartNumbers();
@@ -47,7 +48,10 @@
     });
     var this_product_key = ''
 
+    
 </script>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -89,7 +93,7 @@
                 <!-- setting up a script to write each products name onto the page-->
                 <script>
                     var products = products_data[products_key];
-                    
+
                     for (i = 0; i < products.length; i++) {
                         document.write(`
                                 <section class="item">
@@ -117,7 +121,7 @@
         <!-- inputting a footer-->
 
         <footer>
-        
+
         </footer>
     </form>
 </body>

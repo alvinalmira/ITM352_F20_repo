@@ -1,37 +1,29 @@
 <!-- Alvin Almira :: registration page and CSS based off https://www.youtube.com/watch?v=3qmL-ebPYzw -->
 <!-- Alvin Alvin; uploaded  on Github on Nov18, fixed on Nov22-24 -->
-<script src="./products.js" type="text/javascript"> //uses a get request to get the products array
-</script>
-<script src="./user_data.json" type="json"></script>
 
 <script>
-    // from invoices and assignment1
-    let params = (new URL(document.location)).searchParams; //looks at submitPurchase & querystring, and looks for quantities
-    var quantities = [];
-
-    // processing the invoice; makes a form from the data
-    // loop that get info
-    if (params.has('submitPurchase')) {
-        for (i = 0; i < products.length; i++) {
-            if (params.has(`quantity${i}`)) {
-                a_quantity = params.get(`quantity${i}`);
-                quantities[i] = a_quantity;
-            }
-        }
-
-    }
-
-    if (params.has('username')) {
-        var name = params.get('name');
-        var username = params.get('username');
-    }
 
     function purchaseAlert() {
 
 
         alert(`Thank you for purchasing your EDC loadout. Your total is ${total.toFixed(2)}. We will send you a confirmation email of your order. In the email, we will have a form that has field to put your mailing address and confirmation code. Take a screenshot of this inorder prevent any discrepancies on our end.`);
 
+    }
 
+    function loggedIn() {
+
+        if (document.cookie != "") {
+
+            var cookie_obj = document.cookie.split(";").map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({ ...accumulator, [key.trim()]: decodeURIComponent(value) }), {});
+
+            console.log(cookie_obj);
+
+            document.getElementById("loginReg").href = `/logout`;
+            document.getElementById("loginReg").innerHTML = `Logout, ${cookie_obj['user']}`;
+        }
+    }
+    window.onload = function () {
+        loggedIn();
     }
 </script>
 
@@ -82,9 +74,15 @@
                         <tbody>
                             <p>
                                 <script>
-                                    document.write(`${document.cookie}`)
+                                    if (document.cookie != "") {
+
+                                        var cookie_obj = document.cookie.split(";").map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({ ...accumulator, [key.trim()]: decodeURIComponent(value) }), {});
+
+                                        console.log(cookie_obj);
+                                        document.write(`Hi ${cookie_obj['user']}. Listed below are your items.`);
+                                    }
                                 </script>
-                            </p>
+                            </p><br>
                             <tr>
                                 <th style="text-align: left;" width="50%">Product</th>
                                 <th class="qtybox" width="10%">Quantity</th>
@@ -142,7 +140,8 @@
                             </tr>
                             <tr>
                                 <td colspan="3" width="67%"><span>Tax (
-                                        <script>document.write(100 * tax_rate);</script>% )</span></td>
+                                        <script>document.write(100 * tax_rate);</script>% )
+                                    </span></td>
                                 <td width="54%">$
                                     <script>document.write(tax.toFixed(2));</script>
                                 </td>
@@ -156,7 +155,8 @@
                             <tr>
                                 <td colspan="3" width="67%"><strong>Total</strong></td>
                                 <td width="54%"><strong>$
-                                        <script>document.write(total.toFixed(2));</script></strong></td>
+                                        <script>document.write(total.toFixed(2));</script>
+                                    </strong></td>
                             </tr>
                             <tr>
                                 <td style="text-align: center;" colspan="4"> <strong>OUR SHIPPING POLICY IS: A subtotal

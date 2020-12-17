@@ -47,10 +47,11 @@ app.post("/grab_products_data", function (request, response) {
 app.post("/addToCart", function (request, response) {
     let POST = request.body; // data packaged in body
     console.log(POST);
+    let prod_data = POST;
 
     response.json({ message: "product added." });
-
 });
+//
 
 ///////////// Registration and Login processing
 
@@ -123,7 +124,7 @@ app.post("/process_register", function (request, response) {
         /* replaced ("./invoice.html?" + queryString.stringify(username) + '&' + queryString.stringify(request.query)
 
         */
-       response.cookie("user", username, {maxAge: 10*1000})
+       response.cookie("user", username, {maxAge: 100 *1000})
         response.redirect("./products_display.html");
     } else {
         // redirects to an error notice page w/ hints
@@ -157,7 +158,7 @@ app.post("/process_login", function (request, response) {
             */
 
             // cookies and sesssions
-            response.cookie("user", request.body['username'], { maxAge: 20 * 1000 });
+            response.cookie("user", request.body['username'], { maxAge: 100 * 1000 });
             //
             response.redirect(`./products_display.html`);
         } else {
@@ -169,9 +170,9 @@ app.post("/process_login", function (request, response) {
 });
 
 
-app.post("/logout", function (request, response) {
+app.get("/logout", function (request, response) {
     console.log(request.cookie);
-    response.clearCookie("user", document.cookie);
+    response.clearCookie("user");
     response.redirect("./index.html");
 });
 
