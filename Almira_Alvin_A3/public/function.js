@@ -73,34 +73,9 @@ for (let i = 0; i < carts.length; i++) {
     })
 }
 
-// this function checks the session to see if cartNumbers exist; it will match the number in carts and in the session storage
-function onLoadCartNumbers() {
-    let productNumbers = sessionStorage.getItem('cartNumbers');
-    if (productNumbers) {
-        document.querySelector('.cart span').textContent = productNumbers;
-    }
-}
-
 // this function puts cartNumbers on the session storage
 function cartNumbers() {
     console.log(`Product selected.`)
-
-    let productNumbers = sessionStorage.getItem('cartNumbers');
-
-    //  it parses the productNumbers into an integer from a string
-    productNumbers = parseInt(productNumbers);
-    // if productNumbers is 1, add quantity to products number
-    if (productNumbers) {
-
-
-        sessionStorage.setItem('cartNumbers', productNumbers + 1);
-        document.querySelector('.cart span').innerHTML = productNumbers + 1;
-
-        // if productNumbers does not exist, make carts content equal to 1
-    } else {
-        sessionStorage.setItem('cartNumbers', 1);
-        document.querySelector('.cart span').textContent = 1;
-    }
 }
 // --------
 
@@ -124,6 +99,6 @@ function userCartVerify() {
     if (document.cookie == "") {
         document.getElementById("cart").href = "javascript:void(0)";
     } else {
-        document.getElementById("cart").href = "./invoice.html";
+        document.getElementById("cart").href = "./cart.html";
     }
 }

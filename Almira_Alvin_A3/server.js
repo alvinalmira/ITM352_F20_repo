@@ -1,5 +1,5 @@
-// Alvin Alvin; uploaded  on Github on Nov18, fixed on Nov22-24 ||  from assignment 1 screencast and lab 13
-1
+// Alvin Alvin; changes Dec17 ||  from assignment 1 screencast and lab 13
+
 // Recognitions and REFRENENCES: Daniel Port for the screencasts. Rick Kazman and his help with lab14, from assignment 1 screencast and lab 13 - 15, Daniel Port's workshops )
 
 const express = require('express'); // load & cache express module
@@ -8,14 +8,16 @@ const cookieParser = require('cookie-parser'); // loads cookie parser; allows co
 const myParser = require("body-parser"); //load & cache body parser module
 const session = require('express-session'); // loads sessions;
 const fs = require('fs'); // loads fs actions like read, write, etc...
+var nodemailer = require('nodemailer'); // loads the mail module
 
 const products_data = require('./products.json'); // loads the products.json !!! change this
 
+// from the lab15 examples
 app.use(cookieParser()); // calls cookie-parser module
 app.use(session({ secret: "EDC is a lifestyle" })); // creates a session
 
 
-// declares the user data json file
+// declares the user data json file \\ from lab14 examples
 const user_data_info = 'user_data.json';
 // from lab14 :: check if file exists before reading
 if (fs.existsSync(user_data_info)) {
@@ -27,31 +29,77 @@ if (fs.existsSync(user_data_info)) {
 }
 /////
 
+// from lab13 examples
 app.use(myParser.urlencoded({ extended: true })); //gets data in the form body
 app.use(myParser.json()); // adds JSON body parser middlware
 
 // from assignment 1-3 examples
 app.all('*', function (request, response, next) { // any request methods
-    console.log(request.method + ' to ' + request.path); //write in the console the request method and its path
+    // console.log(request.method + ' to ' + request.path); //write in the console the request method and its path
     // console.log("session id is" + request.session.id);
+
+    //initialize shopping cart, if not already there. (Reference: got this from Kevin's server)
+    if (typeof request.session.cart == 'undefined') {
+
+        request.session.cart = {};
+        for (pk in products_data) {
+            emptyArray = new Array(products_data[pk].length).fill(0)
+            request.session.cart[pk] = emptyArray;
+        }
+        console.log(request.session.cart)
+    }
     next(); // goes onto next process
+    //--
 });
 
-//this get products_data for the service in html
+// code for the products and cart
+//this get products_data for the service in html \\ from assignment 3 code examples
 app.post("/grab_products_data", function (request, response) {
     response.json(products_data);
     // console.log(products_data);
 });
 
-// Processes the products and the quanitites wanted and puts it into the invoice
-app.post("/addToCart", function (request, response) {
-    let POST = request.body; // data packaged in body
-    console.log(POST);
-    let prod_data = POST;
+// gets carts data from the shopping cart
+app.post("/get_cart_data", function (request, response) {
+    response.json(request.session.cart);
+})
 
+//--
+
+// Processes the products and the quanitites wanted and puts it into the invoice \\ from assignment 3 workshop w/ Daniel Port
+app.post("/addToCart", function (request, response) {
+    // var prods = request.body; // data packaged in body
+
+
+    // console.log(response.req.body);
     response.json({ message: "product added." });
+
+    // this checks if the re.body.prod_qty is true.\\__ got this portion of the code from kevin's server
+    if (isNonNegInt(response.req.body.prod_qty) == true) {
+        pk = response.req.body.prod_key; // sets the response.req.body.prod_key as pk
+        idx = Number.parseInt(response.req.body.product_index); // sets the idx as the parsed response.req.body.product_index
+        qty = Number.parseInt(response.req.body.prod_qty); // sets qty as the parsed response.req.body.prod_qty
+        request.session.cart[pk][idx] = qty;
+    }
+    // --
+    request.session.save();
+    console.log(request.session.cart);
+
 });
+
+// code from kevin's server \\ this code redirects the user to the login page if the login does not exist
+app.post("/invoice", function (request, response) {
+    request(request.session.cart);
+    console.log(request.session.cart)
+    response.redirect("invoice.html");
+});
+
+
 //
+
+
+
+
 
 ///------- Registration and Login processing
 // from lab 14 :: to process the registration form
@@ -123,7 +171,7 @@ app.post("/process_register", function (request, response) {
         /* replaced ("./invoice.html?" + queryString.stringify(username) + '&' + queryString.stringify(request.query)
 
         */
-        response.cookie("user", username, { maxAge: 100 * 1000 })
+        response.cookie("user", username, { maxAge: 1000 * 1000 })
         response.redirect("./products_display.html");
     } else {
         // redirects to an error notice page w/ hints
@@ -148,12 +196,12 @@ app.post("/process_login", function (request, response) {
         userdata = user_reg_data[request.body['username'].toLowerCase()];
         if (request.body['password'] == userdata.password) {
             userdata_Uname = user_reg_data[request.body['username'].toLowerCase()];
-            request.query.username = userdata_Uname;
+            request.session.username = userdata_Uname;
 
             /* took out "./invoice.html?" + queryString.stringify(request.body) + '&' + queryString.stringify(request.query)
             */
             // cookies and sesssions
-            response.cookie("user", request.body['username'], { maxAge: 100 * 1000 });
+            response.cookie("user", request.body['username']);
             //
             response.redirect(`./products_display.html`);
         } else {
@@ -164,13 +212,17 @@ app.post("/process_login", function (request, response) {
     }
 });
 
-// when path is called, the cookie is deleted and the user is redirected to the index.html page
+// when path is called, the cookie is deleted and the user is redirected to the index.html page \\ from lab15 examples
 app.get("/logout", function (request, response) {
-    console.log(request.cookie);
     response.clearCookie("user");
+    request.session.destroy();
+    // console.log(request.cookie);
     response.redirect("./index.html");
 });
 
+// -----  emails user when they press purchase button  \\ from assignment 3 email example
+
+// -----
 
 //from lab12 || repeats the isNonNegInt function from the products_display.html 
 function isNonNegInt(qty, return_errors = false) { //this function checks if values are postitive, integer, whole values 
