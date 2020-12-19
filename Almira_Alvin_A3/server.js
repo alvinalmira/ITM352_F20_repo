@@ -14,7 +14,10 @@ const products_data = require('./products.json'); // loads the products.json !!!
 
 // from the lab15 examples
 app.use(cookieParser()); // calls cookie-parser module
-app.use(session({ secret: "EDC is a lifestyle" })); // creates a session
+app.use(session({
+    secret: "EDC is a lifestyle",
+    cookie: { maxAge: 6000 }
+})); // creates a session
 
 
 // declares the user data json file \\ from lab14 examples

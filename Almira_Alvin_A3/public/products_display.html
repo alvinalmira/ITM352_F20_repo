@@ -111,8 +111,9 @@
                                     <!--making an add to cart button
                                         https://stackoverflow.com/questions/1601933/how-do-i-stop-a-web-page-from-scrolling-to-the-top-when-a-link-is-clicked-that-t
                                         the discussion talks about preventing the page from scrolling up when you click an a tag-->
-
-                                    <a class="add-cart" href="javascript:void(0);" onclick="updateCart(${i});" >Add to Cart</a>
+                                    <!--
+                                    <a class="add-cart" href="javascript:void(0);" onclick="updateCart(${i});" >Add to Cart</a> -->
+                                    <input type="button" value="Add To Cart" name="purchase_submit"  onclick="updateCart(${i});">
                 </section>`
 
                         );
