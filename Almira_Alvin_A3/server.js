@@ -16,7 +16,6 @@ const products_data = require('./products.json'); // loads the products.json !!!
 app.use(cookieParser()); // calls cookie-parser module
 app.use(session({
     secret: "EDC is a lifestyle",
-    cookie: { maxAge: 6000 }
 })); // creates a session
 
 
@@ -49,7 +48,7 @@ app.all('*', function (request, response, next) { // any request methods
             emptyArray = new Array(products_data[pk].length).fill(0)
             request.session.cart[pk] = emptyArray;
         }
-        console.log(request.session.cart)
+
     }
     next(); // goes onto next process
     //--
@@ -73,27 +72,31 @@ app.post("/get_cart_data", function (request, response) {
 app.post("/addToCart", function (request, response) {
     // var prods = request.body; // data packaged in body
 
-
     // console.log(response.req.body);
     response.json({ message: "product added." });
 
+    console.log(request.session.cart);
+
     // this checks if the re.body.prod_qty is true.\\__ got this portion of the code from kevin's server
-    if (isNonNegInt(response.req.body.prod_qty) == true) {
-        pk = response.req.body.prod_key; // sets the response.req.body.prod_key as pk
-        idx = Number.parseInt(response.req.body.product_index); // sets the idx as the parsed response.req.body.product_index
-        qty = Number.parseInt(response.req.body.prod_qty); // sets qty as the parsed response.req.body.prod_qty
+    if (isNonNegInt(request.body.prod_qty) == true) {
+        pk = request.body.prod_key; // sets the response.req.body.prod_key as pk
+        idx = request.body.prod_index; // sets the idx as the parsed response.req.body.product_index
+        qty = Number.parseInt(request.body.prod_qty); // sets qty as the parsed response.req.body.prod_qty
         request.session.cart[pk][idx] = qty;
+
     }
     // --
-    request.session.save();
     console.log(request.session.cart);
+    request.session.save();
+
+
 
 });
 
 // code from kevin's server \\ this code redirects the user to the login page if the login does not exist
 app.post("/invoice", function (request, response) {
-    request(request.session.cart);
-    console.log(request.session.cart)
+
+
     response.redirect("invoice.html");
 });
 
@@ -174,7 +177,7 @@ app.post("/process_register", function (request, response) {
         /* replaced ("./invoice.html?" + queryString.stringify(username) + '&' + queryString.stringify(request.query)
 
         */
-        response.cookie("user", username, { maxAge: 1000 * 1000 })
+        response.cookie("user", username)
         response.redirect("./products_display.html");
     } else {
         // redirects to an error notice page w/ hints
@@ -195,11 +198,13 @@ app.post("/process_login", function (request, response) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     // checks if the user exists; if they exist, get the password
     if (typeof user_reg_data[request.body['username'].toLowerCase()] != 'undefined') {
-        // console.log(userdata)
+        
+
         userdata = user_reg_data[request.body['username'].toLowerCase()];
         if (request.body['password'] == userdata.password) {
             userdata_Uname = user_reg_data[request.body['username'].toLowerCase()];
             request.session.username = userdata_Uname;
+            request.session.save();
 
             /* took out "./invoice.html?" + queryString.stringify(request.body) + '&' + queryString.stringify(request.query)
             */
@@ -224,7 +229,56 @@ app.get("/logout", function (request, response) {
 });
 
 // -----  emails user when they press purchase button  \\ from assignment 3 email example
+app.get("/checkout", function (request, response) {
+    // Generate HTML invoice string
 
+    console.log("testing if this is called")
+
+    var invoice_str = `Thank you for your order!<table border><th>Quantity</th><th>Item</th>`;
+    var shopping_cart = request.session.cart;
+    for (product_key in products_data) {
+        for (i = 0; i < products_data[product_key].length; i++) {
+            if (typeof shopping_cart[product_key] == 'undefined') continue;
+            qty = shopping_cart[product_key][i];
+            if (qty > 0) {
+                invoice_str += `<tr><td>${qty}</td><td>${products_data[product_key][i].name}</td><tr>`;
+            }
+        }
+    }
+    invoice_str += '</table>';
+    // Set up mail server. Only will work on UH Network due to security restrictions
+    var transporter = nodemailer.createTransport({
+        host: "mail.hawaii.edu",
+        port: 25,
+        secure: false, // use TLS
+        tls: {
+            // do not fail on invalid certs
+            rejectUnauthorized: false
+        }
+    });
+    console.log(request.session.username.email);
+
+    var user_email = request.session.username.email;
+    var mailOptions = {
+        from: 'phoney_store@bogus.com',
+        to: user_email,
+        subject: 'Your Everyday EDC Invoice',
+        html: invoice_str
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            invoice_str += '<br>There was an error and your invoice could not be emailed :(';
+            console.log(error);
+        } else {
+            invoice_str += `<br>Your invoice was mailed to ${user_email}`;
+        }
+        response.send(invoice_str);
+    });
+
+    console.log(invoice_str);
+
+});
 // -----
 
 //from lab12 || repeats the isNonNegInt function from the products_display.html 

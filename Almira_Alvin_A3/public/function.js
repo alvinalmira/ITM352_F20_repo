@@ -40,7 +40,7 @@ function nav_bar() {
         <ul>
 
             <li><a class="index" href="./index.html">Your EDC</a></li>
-            <li><a class="cart" id="cart" href="javascript:void(0)" onclick="userCartVerify();"  >Cart:<span>0</span></a></li>
+            <li><a class="cart" id="cart" href="javascript:void(0)" onclick="userCartVerify();" >Cart<span></span></a></li>
             <li><a class="products" href="./products_display.html">Product Categories</a></li>
             <li><a class="loginReg" id="loginReg" href="./forms/login.html">Login/Signup</a></li>
 

@@ -1,1 +1,12 @@
-{"itm352":{"name":"itm352 grader","password":"grader","email":"dport69@gmail.com"}}
+{
+    "itm352": {
+        "name": "itm352 grader",
+        "password": "grader",
+        "email": "aalmira@hawaii.edu"
+    },
+    "tester": {
+        "name": "ae onethirty",
+        "password": "1111111",
+        "email": "test@gmail.com"
+    }
+}

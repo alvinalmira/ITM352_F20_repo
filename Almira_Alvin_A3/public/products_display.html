@@ -12,9 +12,9 @@
             "prod_name": document.getElementById("product-name").innerHTML
         };
 
-        //console.log(payload.prod_qty);
-        // console.log(payload.prod_price);
-        //console.log(payload.prod_name);
+        console.log(payload.prod_qty);
+        console.log(payload.prod_price);
+        console.log(payload.prod_name);
 
         fetch("/addToCart",
             {
@@ -32,6 +32,7 @@
     // -- anonymous functions that calls the functions from function.js
     window.onload = function () {
         loggedIn();
+        isNonNegInt();
     }
 
     // searches the URL for the products key \\ REFERENCE: Assignment 3 Example code
@@ -113,7 +114,7 @@
                                         the discussion talks about preventing the page from scrolling up when you click an a tag-->
                                     <!--
                                     <a class="add-cart" href="javascript:void(0);" onclick="updateCart(${i});" >Add to Cart</a> -->
-                                    <input type="button" value="Add To Cart" name="purchase_submit"  onclick="updateCart(${i});">
+                                    <input class"add-cart" type="button" value="Add To Cart" name="purchase_submit"  onclick="updateCart(${i});">
                 </section>`
 
                         );

@@ -22,7 +22,7 @@
     //
     var products_data;
     var total = 0;
-    loadJSON('get_products_data', function (response) {
+    loadJSON('grab_products_data', function (response) {
         // Parsing JSON string into object
         products_data = JSON.parse(response);
     });
@@ -103,30 +103,60 @@
                             </tr>
                             <script>
                                 //Makes the product loop in the shopping cart gathering the items in cart
+                                //  ----- taken from daphne's code
+
+                                subtotal = 0
                                 for (pk in cart) {
                                     for (i in cart[pk]) {
                                         qty = cart[pk][i]
 
                                         if (qty > 0) {
 
+                                            console.log(products_data);
+                                            console.log(pk);
+                                            console.log(i);
+
                                             ext_price = qty * products_data[pk][i]["price"];
 
                                             document.write(`
                                             <tr>
-                                              <td class="w-25">
-                                                <img src=${products_data[pk][i]["image"]} class="img-fluid img-thumbnail" alt="Sheep">
-                                              </td>
                                               <td>${products_data[pk][i]["name"]}</td>
                                               <td>\$${products_data[pk][i]["price"].toFixed(2)}</td>
                                               <td class="qty">${qty}</td>
-                                              <td class="qty"><input type="button" value="Back to Edit" onclick="window.history.back()"/> </td>
                                               <td>\$${ext_price.toFixed(2)}</td>
+                                              <td class="qty"><input type="button" value="Back to Edit" onclick="window.history.back()"/> </td>
                                               
                                             </tr>`
                                             );
+                                            subtotal += ext_price
                                         }
                                     }
                                 }
+
+                                // Compute tax
+                                var tax_rate = 0.0575;
+                                var tax = tax_rate * subtotal;
+                                var shipping = 0;
+
+                                // Compute shipping
+                                if (subtotal == 0) {
+                                    shipping = 0;
+                                }
+                                else if (subtotal <= 50) {
+                                    shipping = 2;
+                                }
+                                else if (subtotal <= 100) {
+                                    shipping = 5;
+                                }
+                                else {
+                                    shipping = 0.05 * subtotal; // 5% of subtotal
+                                }
+
+                                // Compute grand total
+                                var total = subtotal + tax + shipping;
+                                total = total.toFixed(2);
+
+
                             </script>
                             <!--    makes subtotal, shipping, tax, and total -->
                             <tr>
@@ -136,8 +166,7 @@
                                 <td colspan="3" width="67%">Sub-total</td>
                                 <td width="54%">$
                                     <script>
-                                        var subtotal = subtotal.toFixed(2)
-                                        document.write(subtotal);
+                                        document.write(subtotal.toFixed(2));
                                     </script>
                                 </td>
                             </tr>
@@ -165,7 +194,6 @@
                                 <td colspan="3" width="67%"><strong>Total</strong></td>
                                 <td width="54%"><strong>$
                                         <script>
-                                            var total = total.toFixed(2);
                                             document.write(total);
                                         </script>
                                     </strong></td>
@@ -184,7 +212,7 @@
                 </div>
             </div>
 
-            <input type="submit" value="Purchase" name="completePurchase" class="purchase-btn">
+            <input type="submit" value="Proceed to Checkout" name="completePurchase" class="purchase-btn">
 
         </form>
     </div>

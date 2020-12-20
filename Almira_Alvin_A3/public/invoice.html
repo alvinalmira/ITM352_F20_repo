@@ -18,6 +18,24 @@
     window.onload = function () {
         loggedIn();
     }
+    // ----
+    var products_data;
+    var total = 0;
+    loadJSON('grab_products_data', function (response) {
+        // Parsing JSON string into object
+        products_data = JSON.parse(response);
+    });
+
+    var cart;
+    loadJSON('get_cart_data', function (response) {
+        // Parsing JSON string into object
+        cart = JSON.parse(response);
+    });
+
+    let params = (new URL(document.location)).searchParams;
+    if (params.has('products_key')) {
+        var products_key = params.get('products_key');
+    }
 </script>
 
 
@@ -47,7 +65,7 @@
             <ul>
 
                 <li><a class="index" href="./index.html">Your EDC</a></li>
-                <li><a class="cart" href="./invoice.html">Cart</a></li>
+                <li><a class="cart" href="./cart.html">Cart</a></li>
                 <li><a class="products" href="./products_display.html">Products Categories</a></li>
                 <li><a class="loginReg" id="loginReg" href="./forms/login.html">Login/Signup</a></li>
 
@@ -59,7 +77,7 @@
     </header>
     <br>
     <div class="row">
-        <form name="completePurchase">
+        <form name="/checkout" action="/checkout" method="GET">
             <div class="col-25">
                 <div class="container">
                     <!--invoice table-->
@@ -84,20 +102,28 @@
                             </tr>
                             <script>
                                 subtotal = 0
-                                for (i = 0; i < products.length; i++) {
-                                    if (quantities[i] > 0) {
-                                        // makes products row
-                                        extended_price = quantities[i] * products[i].price
-                                        extended_price = extended_price.toFixed(2)
-                                        subtotal += extended_price;
-                                        document.write(`
-            <tr>
-              <td style="text-align: left;" width="40%">${products[i].name}</td>
-              <td width="20%">${quantities[i]}</td>
-              <td width="20%">\$${products[i].price}</td>
-              <td width="20%">\$${extended_price}</td>
-            </tr>
-            `);
+                                for (pk in cart) {
+                                    for (i in cart[pk]) {
+                                        qty = cart[pk][i]
+                                        if (qty > 0) {
+
+                                            console.log(products_data);
+                                            console.log(pk);
+                                            console.log(i);
+
+                                            ext_price = qty * products_data[pk][i]["price"];
+
+                                            document.write(`
+                                            <tr>
+                                              <td>${products_data[pk][i]["name"]}</td>
+                                              <td>\$${products_data[pk][i]["price"].toFixed(2)}</td>
+                                              <td class="qty">${qty}</td>
+                                              <td>\$${ext_price.toFixed(2)}</td>
+                                              
+                                            </tr>`
+                                            );
+                                            subtotal += ext_price;
+                                        }
                                     }
                                 }
                                 // Compute tax
@@ -119,7 +145,8 @@
                                 }
 
                                 // Compute grand total
-                                var total = subtotal + tax + shipping;
+                                var total = (subtotal + tax + shipping).toFixed(2);
+
 
                             </script>
                             <!--    makes subtotal, shipping, tax, and total -->
@@ -130,8 +157,7 @@
                                 <td colspan="3" width="67%">Sub-total</td>
                                 <td width="54%">$
                                     <script>
-                                        var subtotal = subtotal.toFixed(2)
-                                        document.write(subtotal);
+                                        document.write(subtotal.toFixed(2));
                                     </script>
                                 </td>
                             </tr>
@@ -159,7 +185,6 @@
                                 <td colspan="3" width="67%"><strong>Total</strong></td>
                                 <td width="54%"><strong>$
                                         <script>
-                                            var total = total.toFixed(2);
                                             document.write(total);
                                         </script>
                                     </strong></td>
@@ -177,18 +202,8 @@
                     </table>
                 </div>
             </div>
-            <script>
 
-                function purchaseAlert() {
-
-
-                    alert(`Thank you for purchasing your EDC loadout. Your total is ${total}. We will send you a confirmation email of your order. In the email, we will have a form that has field to put your mailing address and confirmation code. Take a screenshot of this inorder prevent any discrepancies on our end.`);
-
-
-                }
-            </script>
-            <input type="button" value="Purchase" name="completePurchase" class="purchase-btn"
-                onclick="purchaseAlert();">
+            <input type="submit" value="Purchase" class="purchase-btn">
 
         </form>
     </div>
