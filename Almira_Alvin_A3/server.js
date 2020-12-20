@@ -213,7 +213,7 @@ app.post("/process_login", function (request, response) {
             response.redirect(`./forms/invalid_login.html?password=incorrect`);
         }
     } else {
-        response.redirect(` ${request.body['username']} does not exist. Press the back button.`);
+        response.redirect(`./forms/invalid_login.html?password=incorrect`);
     }
 });
 
