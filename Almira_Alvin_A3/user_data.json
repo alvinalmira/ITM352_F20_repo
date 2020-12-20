@@ -1,12 +1,1 @@
-{
-    "itm352": {
-        "name": "itm352 grader",
-        "password": "grader",
-        "email": "aalmira@hawaii.edu"
-    },
-    "tester": {
-        "name": "ae onethirty",
-        "password": "1111111",
-        "email": "test@gmail.com"
-    }
-}
+{"itm352":{"name":"itm352 grader","password":"grader","email":"aalmira@hawaii.edu"},"tester":{"name":"ae onethirty","password":"1111111","email":"test@gmail.com"},"test1":{"name":"tester mcfly","password":"123123","email":"marty1254@gmail.com"},"jose1":{"name":"jose guy","password":"123123","email":"testing1@gmail.com"},"jose3":{"name":"jose guy","password":"111111","email":"aalmira@hawaii.edu"},"1jose":{"name":"jose guy","password":"111111","email":"aalmira@hawaii.edu"},"12jose":{"name":"jose guy","password":"111111","email":"aalmira@hawaii.edu"}}

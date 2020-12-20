@@ -171,8 +171,11 @@ app.post("/process_register", function (request, response) {
         username = request.body.username.toLowerCase();
 
         /* replaced ("./invoice.html?" + queryString.stringify(username) + '&' + queryString.stringify(request.query)
-
         */
+       email = request.body.email
+
+       request.session.email
+       request.session.save()
         response.cookie("user", username)
         response.redirect("./products_display.html");
     } else {
