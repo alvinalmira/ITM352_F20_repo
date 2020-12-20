@@ -215,7 +215,7 @@ app.post("/process_login", function (request, response) {
     } else {
         response.redirect(`./forms/invalid_login.html?password=incorrect`);
     }
-});
+}); 
 
 // when path is called, the cookie is deleted and the user is redirected to the index.html page \\ from lab15 examples
 app.get("/logout", function (request, response) {
