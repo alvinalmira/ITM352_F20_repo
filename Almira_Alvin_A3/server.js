@@ -1,6 +1,6 @@
-// Alvin Alvin; changes Dec17 ||  from assignment 1 screencast and lab 13
+// Alvin Alvin; changes Dec20 Guam time ||  ADAPATED FROM MY ASSIGNMENT2 from assignment 1 screencast and lab 13
 
-// Recognitions and REFRENENCES: Daniel Port for the screencasts. Rick Kazman and his help with lab14, from assignment 1 screencast and lab 13 - 15, Daniel Port's workshops )
+// Recognitions and REFRENENCES: Daniel Port for the screencasts. Rick Kazman and his help with lab14, from assignment 1 screencast and lab 13 - 15, Daniel Port's workshop, and from fellow students when I got major stuck)
 
 const express = require('express'); // load & cache express module
 const app = express(); // assign module to variable 'app'
@@ -51,7 +51,7 @@ app.all('*', function (request, response, next) { // any request methods
 
     }
     next(); // goes onto next process
-    //--
+    //-- --- 
 });
 
 // code for the products and cart
@@ -61,7 +61,7 @@ app.post("/grab_products_data", function (request, response) {
     // console.log(products_data);
 });
 
-// gets carts data from the shopping cart
+// gets carts data from the shopping cart \\ from assignment 3 example
 app.post("/get_cart_data", function (request, response) {
     response.json(request.session.cart);
 })
@@ -102,10 +102,6 @@ app.post("/invoice", function (request, response) {
 
 
 //
-
-
-
-
 
 ///------- Registration and Login processing
 // from lab 14 :: to process the registration form
@@ -188,8 +184,6 @@ app.post("/process_register", function (request, response) {
 
     }
 
-
-
 });
 
 // from lab14 :: processes the Login form
@@ -198,7 +192,7 @@ app.post("/process_login", function (request, response) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     // checks if the user exists; if they exist, get the password
     if (typeof user_reg_data[request.body['username'].toLowerCase()] != 'undefined') {
-        
+
 
         userdata = user_reg_data[request.body['username'].toLowerCase()];
         if (request.body['password'] == userdata.password) {
@@ -227,24 +221,69 @@ app.get("/logout", function (request, response) {
     // console.log(request.cookie);
     response.redirect("./index.html");
 });
+// ----- 
 
-// -----  emails user when they press purchase button  \\ from assignment 3 email example
+// -----  emails user when they press purchase button  \\ REFERENCE ASSIGNMENT 3 email example
 app.get("/checkout", function (request, response) {
     // Generate HTML invoice string
 
     console.log("testing if this is called")
-
+    var subtotal = 0;
+    var shipping = 0;
     var invoice_str = `Thank you for your order!<table border><th>Quantity</th><th>Item</th>`;
     var shopping_cart = request.session.cart;
     for (product_key in products_data) {
         for (i = 0; i < products_data[product_key].length; i++) {
             if (typeof shopping_cart[product_key] == 'undefined') continue;
             qty = shopping_cart[product_key][i];
-            if (qty > 0) {
-                invoice_str += `<tr><td>${qty}</td><td>${products_data[product_key][i].name}</td><tr>`;
+            if (qty > 0) { // got this code form daphne's server
+                ext_price = qty * products_data[product_key][i]["price"];
+                subtotal += ext_price;
+                invoice_str += `<tr><td>${products_data[product_key][i].name}</td><td>${qty}</td><td>\$${products_data[product_key][i]["price"].toFixed(2)}</td><td>\$${ext_price.toFixed(2)}</td><tr>`;
             }
         }
     }
+    // Compute tax
+    var tax_rate = 0.0575;
+    var tax = tax_rate * subtotal;
+
+    // Compute shipping
+    if (subtotal == 0) {
+        shipping = 0;
+    }
+    else if (subtotal <= 50) {
+        shipping = 2;
+    }
+    else if (subtotal <= 100) {
+        shipping = 5;
+    }
+    else {
+        shipping = 0.05 * subtotal; // 5% of subtotal
+    }
+    var total = (subtotal + tax + shipping);
+
+    // Compute grand total
+    invoice_str += `<tr>
+        <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
+        <td width="54%">\$${subtotal.toFixed(2)}</td>
+      </tr>`;
+    invoice_str += `
+      <tr>
+        <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Tax @ 5.75%</span></td>
+        <td width="54%">\$${tax.toFixed(2)}</td>
+      </tr>
+      `;
+    invoice_str += `
+      <tr>
+        <td style = "text-align: center;" colspan = "3" width="67"><span style="font-family: arial;">Shipping</span></td>
+        <td width="54%">$${shipping.toFixed(2)}</td>
+      `;
+   invoice_str += `
+      <tr>
+        <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
+        <td width="54%"><strong>$${total.toFixed(2)}</strong></td>
+      </tr>
+      `;
     invoice_str += '</table>';
     // Set up mail server. Only will work on UH Network due to security restrictions
     var transporter = nodemailer.createTransport({
@@ -260,7 +299,7 @@ app.get("/checkout", function (request, response) {
 
     var user_email = request.session.username.email;
     var mailOptions = {
-        from: 'phoney_store@bogus.com',
+        from: 'Skrillex@yourEDC.com',
         to: user_email,
         subject: 'Your Everyday EDC Invoice',
         html: invoice_str
@@ -279,7 +318,7 @@ app.get("/checkout", function (request, response) {
     console.log(invoice_str);
 
 });
-// -----
+// --------
 
 //from lab12 || repeats the isNonNegInt function from the products_display.html 
 function isNonNegInt(qty, return_errors = false) { //this function checks if values are postitive, integer, whole values 
